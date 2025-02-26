@@ -5,8 +5,8 @@ import pprint
 import sys
 import DnD_function_library
 
-if os.path.exists("DnD_Database.db"):
-    os.remove("DnD_Database.db")
+#    if os.path.exists("DnD_Database.db"):
+#        os.remove("DnD_Database.db")
 
 conn = sqlite3.connect("DnD_Database.db")
 cursor = conn.cursor()
