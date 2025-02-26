@@ -337,7 +337,7 @@ class Dnd:
             self.darkvision = True
             self.languages = ["Common", "Infernal"]
         elif self.user_race.lower().strip() == "aasimar" or self.user_race.lower().strip() == "changeling" or self.user_race.lower().strip() == "kenku" or self.user_race.lower().strip() == "shifter" or self.user_race.lower().strip() == "aarakocra" or self.user_race.lower().strip() == "kobold" or self.user_race.lower().strip() == "fire genasi" or self.user_race.lower().strip() == "air genasi" or self.user_race.lower().strip() == "water genasi" or self.user_race.lower().strip() == "earth genasi":
-            self.stat_types[input("Choose 1 score to increase by 1 (Str, Dex, Con, Int, Wis, Cha)").capitalize().strip()] += 1
+            self.stat_types[input("Choose 1 score to increase by 1 (Str, Dex, Con, Int, Wis, Cha) ").capitalize().strip()] += 1
             inc_2 = int(input("Would you like to increase one score by 2 points (1), or 2 scores by 1 point each (2)? ").strip())
             if inc_2 == 1:
                 self.stat_increase(1)
@@ -347,14 +347,14 @@ class Dnd:
                 self.movement_speed = 35
             else:
                 self.movement_speed = 30
-            if self.user_race.lower.strip() == "aarakocra":
+            if self.user_race.lower().strip() == "aarakocra":
                 self.darkvision = False
             else:
                 self.darkvision = True
             self.languages = ["Common", input("What language other than Common have you agreed on with your DM? ")]
         elif self.user_race.lower().strip() == "warforged":
             self.stat_types["Con"] += 2
-            self.stat_types[input("Choose 1 score to increase by 1 (Str, Dex, Con, Int, Wis, Cha)").capitalize().strip()] += 1
+            self.stat_types[input("Choose 1 score to increase by 1 (Str, Dex, Con, Int, Wis, Cha) ").capitalize().strip()] += 1
             self.movement_speed = 30
             self.darkvision = False
             self.languages = ["Common", input("Choose 1 language other than Common: ")]

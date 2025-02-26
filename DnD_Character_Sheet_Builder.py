@@ -20,13 +20,13 @@ while True:
         save = input("Would you like to save your character to a text file? (y/n) ")  
         if save.lower().strip() == "y":
             save_type = input("Would you like to overwrite a file that was already made (or make a new file) (1), or add to a file that was already made (2)? ").lower().strip()
-        dnd.char_name = input("What is your character's name? ").strip()  
+        dnd.char_name = input("What is your character's name? ").strip().title()
         if dnd.char_name.lower() != "andrew" and dnd.char_name.lower() != "luca" and dnd.char_name.lower() != "kai" and dnd.char_name.lower() != "z" and dnd.char_name.lower() != "zurulien":
-            dnd.user_class = input("What class do you choose? (Barbarian, Fighter, Wizard, Rogue, Bard, Druid, Paladin, Cleric, Monk, Ranger, Sorcerer, Warlock, Artificer. If you choose multiple, it will automatically distribute your levels evenly between them. Separate with a space. Put priority class first.) ").strip().split(" ")
+            dnd.user_class = input("What class do you choose? (Barbarian, Fighter, Wizard, Rogue, Bard, Druid, Paladin, Cleric, Monk, Ranger, Sorcerer, Warlock, Artificer. If you choose multiple, it will automatically distribute your levels evenly between them. Separate with a space. Put priority class first.) ").title().strip().split(" ")
         else:
-            dnd.user_class = [""]  
-        dnd.roll_stats = 4  
-        dnd.stat_roll(dnd.user_class)  
+            dnd.user_class = [""]
+        dnd.roll_stats = 4
+        dnd.stat_roll(dnd.user_class)
         print(dnd.stat_types)
         if dnd.char_name.lower().strip() == "z" or dnd.char_name.lower().strip() == "zurulien":
             dnd.set_race("Pure Starling")
@@ -48,13 +48,14 @@ while True:
             proficiency_bonus = 6
         else:
             proficiency_bonus = proficiency[dnd.user_level]
-        alignment = input("What is your alignment? (Chaotic Good, Neutral Good, Lawful Good, Lawful Neutral, True Neutral, Chaotic Neutral, Lawful Evil, Neutral Evil, Chaotic Evil) ")
+        alignment = input("What is your alignment? (Chaotic Good, Neutral Good, Lawful Good, Lawful Neutral, True Neutral, Chaotic Neutral, Lawful Evil, Neutral Evil, Chaotic Evil) ").title()
 
     else:
         break
     if save.lower().strip() == "n":
         if dnd.char_name.lower() == "andrew" or dnd.char_name.lower() == "luca" or dnd.char_name.lower() == "kai" or dnd.char_name.lower() == "z" or dnd.char_name.lower() == "zurulien":
             print(f"""You are {dnd.char_name}!
+You are a {', '.join([str(x) for x in [*dnd.user_class]])}!
 Your level is {dnd.user_level}!
 Your Hit Point Maximum is {dnd.hp_max}!
 Your Initiative Bonus is {mod_dex}!
@@ -69,7 +70,7 @@ Charisma: {dnd.stat_types["Cha"]} ({mod_cha})
 """)
     
         elif dnd.user_class[0].lower() == "artificer":
-            print(f"""You are an {dnd.user_class}!
+            print(f"""You are an {', '.join([str(x) for x in [*dnd.user_class]])}!
 Your level is {dnd.user_level}!
 Your Hit Point Maximum is {dnd.hp_max}!
 Your Initiative Bonus is {mod_dex}!
@@ -98,7 +99,7 @@ Charisma: {dnd.stat_types["Cha"]} ({mod_cha})
 """)
     
         else:
-            print(f"""You are a {dnd.user_class}!
+            print(f"""You are a {', '.join([str(x) for x in [*dnd.user_class]])}!
 Your level is {dnd.user_level}!
 Your Hit Point Maximum is {dnd.hp_max}!
 Your Initiative Bonus is {mod_dex}!
@@ -123,7 +124,7 @@ Charisma: {dnd.stat_types["Cha"]} ({mod_cha})
             print("You have darkvision!")
         print(f"You know these languages:")
         for x in dnd.languages:
-            print("-", x)
+            print("-", x.title())
 
     elif save.lower().strip() == "y":
 
@@ -163,7 +164,7 @@ Charisma: {dnd.stat_types["Cha"]} ({mod_cha})
             with open(full_path, "w+", encoding="utf-8") as file:
                 file.write(f"""
 Name: {dnd.char_name}
-Class: {dnd.user_class}
+Class: {', '.join([str(x) for x in [*dnd.user_class]])}
 Race: {dnd.user_race}
 Level: {dnd.user_level}
 Alignment: {alignment}
@@ -189,7 +190,7 @@ Movement Speed: {dnd.movement_speed}\n""")
     
                 file.write("\nLanguages:\n")
                 for x in dnd.languages:
-                    file.write(f"- {x}\n")
+                    file.write(f"- {x.title()}\n")
 
                 if divider_choice.strip() == "0":
                     None
@@ -211,7 +212,7 @@ Movement Speed: {dnd.movement_speed}\n""")
             with open(full_path, "a+", encoding="utf-8") as file:
                 file.write(f"""
 Name: {dnd.char_name}
-Class: {dnd.user_class}
+Class: {', '.join([str(x) for x in [*dnd.user_class]])}
 Race: {dnd.user_race}
 Level: {dnd.user_level}
 Alignment: {alignment}
@@ -237,7 +238,7 @@ Movement Speed: {dnd.movement_speed}\n""")
     
                 file.write("\nLanguages:\n")
                 for x in dnd.languages:
-                    file.write(f"- {x}\n")
+                    file.write(f"- {x.title()}\n")
 
                 if divider_choice.strip() == "0":
                     None
