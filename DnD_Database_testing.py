@@ -84,14 +84,12 @@ def add_character(char_name, char_race, char_class, char_background, char_level)
     conn = sqlite3.connect("DnD_Database.db")
     cursor = conn.cursor()
     
-    # Check if the character name already exists
     cursor.execute("SELECT id FROM Characters WHERE name = ?", (char_name,))
     existing_character = cursor.fetchone()
     
     if existing_character:
         print(f"Error: A character with the name '{char_name}' already exists.")
     else:
-        # Insert the new character if the name is unique
         cursor.execute("INSERT INTO Characters (name, race, class, background, level) VALUES (?, ?, ?, ?, ?)",
                        (char_name, char_race, char_class, char_background, char_level))
         conn.commit()
@@ -99,7 +97,6 @@ def add_character(char_name, char_race, char_class, char_background, char_level)
 
     conn.close()
 
-# Example usage
 #add_character("Gandalf", "Elf", "Wizard", "Acolyte", 20)
 
 def get_characters():
@@ -112,7 +109,6 @@ def get_characters():
     for row in rows:
         pprint.pprint(row)
 
-# Example usage
 #get_characters()
 
 
@@ -124,7 +120,6 @@ def update_character_level(name, new_level):
     
     conn.commit()
     
-# Example usage
 #update_character_level("Gandalf", 25)
 
 def delete_character(name):
@@ -135,7 +130,6 @@ def delete_character(name):
     
     conn.commit()
 
-# Example usage
 #delete_character("Luna")
 
 
@@ -145,7 +139,6 @@ def get_characters_df():
 
     return df
 
-# Example usage
 #pprint.pprint(get_characters_df())
 
 conn.close()

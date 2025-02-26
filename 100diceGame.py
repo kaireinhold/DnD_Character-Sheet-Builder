@@ -6,7 +6,6 @@ import math
 import DnD_function_library
 from DnD_function_library import Dnd
 
-# Create an instance of the Dice class
 dice = Dnd()
 
 play = False
