@@ -55,7 +55,7 @@ while True:
     if save.lower().strip() == "n":
         if dnd.char_name.lower() == "andrew" or dnd.char_name.lower() == "luca" or dnd.char_name.lower() == "kai" or dnd.char_name.lower() == "z" or dnd.char_name.lower() == "zurulien":
             print(f"""You are {dnd.char_name}!
-You are a {', '.join([str(x) for x in [*dnd.user_class]])}!
+You are a {' '.join([str(x) for x in [*dnd.user_class]]).title()}!
 Your level is {dnd.user_level}!
 Your Hit Point Maximum is {dnd.hp_max}!
 Your Initiative Bonus is {mod_dex}!
@@ -70,7 +70,8 @@ Charisma: {dnd.stat_types["Cha"]} ({mod_cha})
 """)
     
         elif dnd.user_class[0].lower() == "artificer":
-            print(f"""You are an {', '.join([str(x) for x in [*dnd.user_class]])}!
+            print(f"""You are {dnd.char_name}!
+You are an {' '.join([str(x) for x in [*dnd.user_class]]).title()}!
 Your level is {dnd.user_level}!
 Your Hit Point Maximum is {dnd.hp_max}!
 Your Initiative Bonus is {mod_dex}!
@@ -85,7 +86,8 @@ Charisma: {dnd.stat_types["Cha"]} ({mod_cha})
 """)
     
         elif dnd.user_class == None or dnd.user_class == "" or dnd.user_class[0].lower() != 'barbarian' and dnd.user_class[0].lower() != 'fighter' and dnd.user_class[0].lower() != 'wizard' and dnd.user_class[0].lower() != 'rogue' and dnd.user_class[0].lower() != 'bard' and dnd.user_class[0].lower() != 'druid' and dnd.user_class[0].lower() != 'paladin' and dnd.user_class[0].lower() != 'cleric' and dnd.user_class[0].lower() != 'monk' and dnd.user_class[0].lower() != 'ranger' and dnd.user_class[0].lower() != 'sorcerer' and dnd.user_class[0].lower() != 'warlock' and dnd.user_class[0].lower() != 'artificer':
-            print(f"""Your level is {dnd.user_level}!
+            print(f"""You are {dnd.char_name}!
+Your level is {dnd.user_level}!
 Your Hit Point Maximum is {dnd.hp_max}!
 Your Initiative Bonus is {mod_dex}!
 Your Proficiency Bonus is {proficiency_bonus}!
@@ -99,7 +101,8 @@ Charisma: {dnd.stat_types["Cha"]} ({mod_cha})
 """)
     
         else:
-            print(f"""You are a {', '.join([str(x) for x in [*dnd.user_class]])}!
+            print(f"""You are {dnd.char_name}!
+You are a {' '.join([str(x) for x in [*dnd.user_class]]).title()}!
 Your level is {dnd.user_level}!
 Your Hit Point Maximum is {dnd.hp_max}!
 Your Initiative Bonus is {mod_dex}!
@@ -115,9 +118,9 @@ Charisma: {dnd.stat_types["Cha"]} ({mod_cha})
         print(f"Your alignment is {alignment}!")
 
         if dnd.user_race.lower().strip() == "aasimar" or dnd.user_race.lower().strip() == "air genasi" or dnd.user_race.lower().strip() == "arachne" or dnd.user_race.lower().strip() == "aarakocra" or dnd.user_race.lower().strip() == "earth genasi" or dnd.user_race.lower().strip() == "elf":
-            print(f"You are an {dnd.user_race}!")
+            print(f"You are an {dnd.user_race.title()}!")
         else:
-            print(f"You are a {dnd.user_race}!")
+            print(f"You are a {dnd.user_race.title()}!")
         print(f"Your movement speed is {dnd.movement_speed}!")
 
         if dnd.darkvision == True:
@@ -164,8 +167,8 @@ Charisma: {dnd.stat_types["Cha"]} ({mod_cha})
             with open(full_path, "w+", encoding="utf-8") as file:
                 file.write(f"""
 Name: {dnd.char_name}
-Class: {', '.join([str(x) for x in [*dnd.user_class]])}
-Race: {dnd.user_race}
+Class: {' '.join([str(x) for x in [*dnd.user_class]]).title()}
+Race: {dnd.user_race.title()}
 Level: {dnd.user_level}
 Alignment: {alignment}
 
@@ -192,7 +195,7 @@ Movement Speed: {dnd.movement_speed}\n""")
                 for x in dnd.languages:
                     file.write(f"- {x.title()}\n")
 
-                if divider_choice.strip() == "0":
+                if divider_choice.strip() == "0" or divider_choice.strip() not in range(1,11):
                     None
                 else:
                     file.write(eval(f"divider{divider_choice}"))
@@ -212,8 +215,8 @@ Movement Speed: {dnd.movement_speed}\n""")
             with open(full_path, "a+", encoding="utf-8") as file:
                 file.write(f"""
 Name: {dnd.char_name}
-Class: {', '.join([str(x) for x in [*dnd.user_class]])}
-Race: {dnd.user_race}
+Class: {' '.join([str(x) for x in [*dnd.user_class]]).title()}
+Race: {dnd.user_race.title()}
 Level: {dnd.user_level}
 Alignment: {alignment}
 
@@ -240,7 +243,7 @@ Movement Speed: {dnd.movement_speed}\n""")
                 for x in dnd.languages:
                     file.write(f"- {x.title()}\n")
 
-                if divider_choice.strip() == "0":
+                if divider_choice.strip() == "0" or divider_choice.strip() not in range(1,11):
                     None
                 else:
                     file.write(eval(f"divider{divider_choice}"))
