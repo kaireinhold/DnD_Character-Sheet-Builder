@@ -276,8 +276,8 @@ def get_characters_df():
     df = pd.read_sql_query("SELECT * FROM Characters", conn)
     return df
 
-add_character("Aragorn", class_id=2, race_id=1, background_id=3, char_level=5, 
-              strength=16, dexterity=14, constitution=14, intelligence=10, wisdom=12, charisma=14)
+#add_character("Aragorn", class_id=2, race_id=1, background_id=3, char_level=5, 
+#              strength=16, dexterity=14, constitution=14, intelligence=10, wisdom=12, charisma=14)
 
 
 
