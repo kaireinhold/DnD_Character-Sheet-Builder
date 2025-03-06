@@ -3,22 +3,29 @@ import pandas as pd
 import os
 import pprint
 import sys
-import DnD_function_library
 
+# Import custom function library if needed
+import DnD_function_library  
+
+# Delete existing database if it exists (for testing purposes)
 if os.path.exists("DnD_Database.db"):
     os.remove("DnD_Database.db")
 
+# Connect to the database
 conn = sqlite3.connect("DnD_Database.db")
 cursor = conn.cursor()
 
-# Characters Table
-cursor.execute(f"""
+# Enable foreign key constraints
+cursor.execute("PRAGMA foreign_keys = ON;")
+
+# Characters Table (Updated)
+cursor.execute("""
     CREATE TABLE IF NOT EXISTS Characters (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL UNIQUE,
-        class TEXT NOT NULL,
-        race TEXT NOT NULL,
-        background TEXT,
+        class_id INTEGER NOT NULL,
+        race_id INTEGER NOT NULL,
+        background_id INTEGER,
         level INTEGER DEFAULT 1,
         str INTEGER DEFAULT 10,
         dex INTEGER DEFAULT 10,
@@ -32,9 +39,10 @@ cursor.execute(f"""
         int_mod INTEGER DEFAULT 0,
         wis_mod INTEGER DEFAULT 0,
         cha_mod INTEGER DEFAULT 0,
-        FOREIGN KEY (class) REFERENCES Classes(name),
-        FOREIGN KEY (race) REFERENCES Races(name),
-        FOREIGN KEY (background) REFERENCES Backgrounds(name)
+        proficiency_bonus INTEGER DEFAULT 2,
+        FOREIGN KEY (class_id) REFERENCES Classes(id) ON DELETE CASCADE,
+        FOREIGN KEY (race_id) REFERENCES Races(id) ON DELETE CASCADE,
+        FOREIGN KEY (background_id) REFERENCES Backgrounds(id) ON DELETE CASCADE
     );
 """)
 
@@ -77,17 +85,36 @@ cursor.execute("""
     );
 """)
 
-# Table to Track Character Skill Proficiencies
+# Populate Skills Table (Improved)
+def populate_skills():
+    skills = [
+        "Acrobatics", "Animal Handling", "Arcana", "Athletics",
+        "Deception", "History", "Insight", "Intimidation",
+        "Investigation", "Medicine", "Nature", "Perception",
+        "Performance", "Persuasion", "Religion", "Sleight of Hand",
+        "Stealth", "Survival"
+    ]
+    
+    try:
+        for skill in skills:
+            cursor.execute("INSERT OR IGNORE INTO Skills (name) VALUES (?);", (skill,))
+        conn.commit()
+    except sqlite3.Error as e:
+        print(f"Error inserting skills: {e}")
+
+populate_skills()
+
+# Table to Track Character Skill Proficiencies (Fixed)
 cursor.execute("""
     CREATE TABLE IF NOT EXISTS Character_Skills (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         character_id INTEGER,
-        skill TEXT NOT NULL UNIQUE,
+        skill_id INTEGER,
         proficiency INTEGER DEFAULT 0,
         FOREIGN KEY (character_id) REFERENCES Characters(id) ON DELETE CASCADE,
-        FOREIGN KEY (skill) REFERENCES Skills(name) ON DELETE CASCADE
+        FOREIGN KEY (skill_id) REFERENCES Skills(id) ON DELETE CASCADE
     );
-""") # 0 = Not Proficient, 1 = Proficient, 2 = Expertise
+""")
 
 # Equipment Table
 cursor.execute("""
@@ -100,15 +127,15 @@ cursor.execute("""
     );
 """)
 
-# Character Inventory Table (Connects Characters to Equipment)
+# Character Inventory Table (Fixed Equipment Reference)
 cursor.execute("""
     CREATE TABLE IF NOT EXISTS Character_Inventory (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         character_id INTEGER,
-        equipment TEXT NOT NULL,
+        equipment_id INTEGER NOT NULL,
         quantity INTEGER DEFAULT 1,
         FOREIGN KEY (character_id) REFERENCES Characters(id) ON DELETE CASCADE,
-        FOREIGN KEY (equipment) REFERENCES Equipment(name) ON DELETE CASCADE
+        FOREIGN KEY (equipment_id) REFERENCES Equipment(id) ON DELETE CASCADE
     );
 """)
 
@@ -127,85 +154,131 @@ cursor.execute("""
     );
 """)
 
-# Character Spells Table (Associates Spells with Characters)
+# Character Spells Table (Fixed Reference)
 cursor.execute("""
     CREATE TABLE IF NOT EXISTS Character_Spells (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         character_id INTEGER,
-        spell TEXT NOT NULL,
+        spell_id INTEGER,
         FOREIGN KEY (character_id) REFERENCES Characters(id) ON DELETE CASCADE,
-        FOREIGN KEY (spell) REFERENCES Spells(name) ON DELETE CASCADE
+        FOREIGN KEY (spell_id) REFERENCES Spells(id) ON DELETE CASCADE
     );
 """)
 
 conn.commit()
 
+# List all tables for verification
 cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
 tables = cursor.fetchall()
-
 print("Tables in database:")
 pprint.pprint(tables)
 
+def add_character(char_name, class_id, race_id, background_id, char_level=1, 
+                  strength=10, dexterity=10, constitution=10, intelligence=10, wisdom=10, charisma=10):
 
-def add_character(char_name, char_race, char_class, char_background, char_level):
-    conn = sqlite3.connect("DnD_Database.db")
-    cursor = conn.cursor()
-    
+    # Check if character name already exists
     cursor.execute("SELECT id FROM Characters WHERE name = ?", (char_name,))
     existing_character = cursor.fetchone()
     
     if existing_character:
         print(f"Error: A character with the name '{char_name}' already exists.")
     else:
-        cursor.execute("INSERT INTO Characters (name, race, class, background, level) VALUES (?, ?, ?, ?, ?)",
-                       (char_name, char_race, char_class, char_background, char_level))
+        # Calculate ability modifiers based on ability scores
+        def ability_modifier(score):
+            return (score - 10) // 2
+
+        str_mod = ability_modifier(strength)
+        dex_mod = ability_modifier(dexterity)
+        con_mod = ability_modifier(constitution)
+        int_mod = ability_modifier(intelligence)
+        wis_mod = ability_modifier(wisdom)
+        cha_mod = ability_modifier(charisma)
+
+        # Calculate proficiency bonus based on level (D&D 5e rules)
+        def calculate_proficiency_bonus(level):
+            return 2 + (level - 1) // 4
+
+        proficiency_bonus = calculate_proficiency_bonus(char_level)
+
+        # Insert character into the database
+        cursor.execute("""
+            INSERT INTO Characters 
+            (name, class_id, race_id, background_id, level, 
+             str, dex, con, int, wis, cha, 
+             str_mod, dex_mod, con_mod, int_mod, wis_mod, cha_mod, proficiency_bonus)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        """, (char_name, class_id, race_id, background_id, char_level, 
+              strength, dexterity, constitution, intelligence, wisdom, charisma, 
+              str_mod, dex_mod, con_mod, int_mod, wis_mod, cha_mod, proficiency_bonus))
+
+        # Get the new character's ID
+        cursor.execute("SELECT id FROM Characters WHERE name = ?", (char_name,))
+        character_id = cursor.fetchone()[0]
+
+        # Assign starting equipment from background
+        cursor.execute("SELECT starting_equipment FROM Backgrounds WHERE id = ?", (background_id,))
+        background_equipment = cursor.fetchone()
+
+        if background_equipment:
+            for item in background_equipment[0].split(', '):
+                cursor.execute("""
+                    INSERT INTO Character_Inventory (character_id, equipment_id, quantity)
+                    SELECT ?, id, 1 FROM Equipment WHERE name = ?;
+                """, (character_id, item))
+
+        # Assign skill proficiencies from background
+        cursor.execute("SELECT skill_proficiencies FROM Backgrounds WHERE id = ?", (background_id,))
+        background_skills = cursor.fetchone()
+
+        if background_skills:
+            for skill in background_skills[0].split(', '):
+                cursor.execute("""
+                    INSERT INTO Character_Skills (character_id, skill_id, proficiency)
+                    SELECT ?, id, 1 FROM Skills WHERE name = ?;
+                """, (character_id, skill))
+
+        # Assign starting weapons and armor from class
+        cursor.execute("SELECT starting_equipment FROM Classes WHERE id = ?", (class_id,))
+        class_equipment = cursor.fetchone()
+
+        if class_equipment:
+            for item in class_equipment[0].split(', '):
+                cursor.execute("""
+                    INSERT INTO Character_Inventory (character_id, equipment_id, quantity)
+                    SELECT ?, id, 1 FROM Equipment WHERE name = ?;
+                """, (character_id, item))
+
         conn.commit()
-        print(f"Character '{char_name}' added successfully.")
+        print(f"Character '{char_name}' added successfully with class and background equipment, skill proficiencies, and proficiency bonus.")
 
-    conn.close()
-
-#add_character("Gandalf", "Elf", "Wizard", "Acolyte", 20)
-
-def get_characters():
-    conn = sqlite3.connect("DnD_Database.db")
-    cursor = conn.cursor()
-    
+# Function to retrieve all characters
+def get_characters():    
     cursor.execute("SELECT * FROM Characters")
     rows = cursor.fetchall()
     
     for row in rows:
         pprint.pprint(row)
 
-#get_characters()
-
-
+# Function to update character level
 def update_character_level(name, new_level):
-    conn = sqlite3.connect("DnD_Database.db")
-    cursor = conn.cursor()
-    
     cursor.execute("UPDATE Characters SET level = ? WHERE name = ?", (new_level, name))
     
     conn.commit()
     
-#update_character_level("Gandalf", 25)
-
+# Function to delete a character
 def delete_character(name):
-    conn = sqlite3.connect("DnD_Database.db")
-    cursor = conn.cursor()
-    
     cursor.execute("DELETE FROM Characters WHERE name = ?", (name,))
     
     conn.commit()
 
-#delete_character("Luna")
-
-
+# Function to return characters as a DataFrame
 def get_characters_df():
-    conn = sqlite3.connect("DnD_Database.db")
     df = pd.read_sql_query("SELECT * FROM Characters", conn)
-
     return df
 
-#pprint.pprint(get_characters_df())
+add_character("Aragorn", class_id=2, race_id=1, background_id=3, char_level=5, 
+              strength=16, dexterity=14, constitution=14, intelligence=10, wisdom=12, charisma=14)
+
+
 
 conn.close()
