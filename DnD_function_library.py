@@ -202,7 +202,7 @@ class Dnd:
                 self.stat_types = {"Str": self.stats[0], "Dex": self.stats[3], "Con": self.stats[4], "Int": self.stats[5], "Wis": self.stats[2], "Cha": self.stats[1]}
             else:
                 self.stat_types = {"Str": self.stats[0], "Dex": self.stats[1], "Con": self.stats[2], "Int": self.stats[3], "Wis": self.stats[4], "Cha": self.stats[5]}
-    
+
         return self.stat_types
 
     def stat_increase(self, inc_amount = None):

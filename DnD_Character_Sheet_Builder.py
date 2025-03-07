@@ -1,5 +1,6 @@
 #Created by Kai Reinhold (kaireinhold on GitHub)
 
+import math
 import random
 import time
 import sys
@@ -10,7 +11,6 @@ import DnD_function_library
 from DnD_function_library import Dnd
 
 dnd = Dnd()
-proficiency = {1: 2, 2: 2, 3: 2, 4: 2, 5: 3, 6: 3, 7: 3, 8: 3, 9: 4, 10: 4, 11: 4, 12: 4, 13: 5, 14: 5, 15: 5, 16: 5}
 
 while True:
     dnd.rolls = []  
@@ -44,10 +44,7 @@ while True:
         mod_cha = (dnd.stat_types["Cha"] - 10) // 2
         
         dnd.calc_hit_points(dnd.user_level, dnd.user_class, mod_con)
-        if dnd.user_level >= 17:
-            proficiency_bonus = 6
-        else:
-            proficiency_bonus = proficiency[dnd.user_level]
+        proficiency_bonus = math.ceil(dnd.user_level/4) + 1
         alignment = input("What is your alignment? (Chaotic Good, Neutral Good, Lawful Good, Lawful Neutral, True Neutral, Chaotic Neutral, Lawful Evil, Neutral Evil, Chaotic Evil) ").title()
 
     else:
