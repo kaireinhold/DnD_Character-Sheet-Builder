@@ -7,120 +7,129 @@ from DnD_function_library import Dnd
 
 dnd = Dnd()
 
-while True:
-    user_advantage = input("Do you have Advantage or Disadvantage? (A, D, or None) ")
-    if user_advantage.lower().strip() == 'a':
-        dnd.roll_no_output("2d20")
-        print(dnd.rolls)
-        dice = max(dnd.rolls)
-    elif user_advantage.lower().strip() == 'd':
-        dnd.roll_no_output("2d20")
-        print(dnd.rolls)
-        dice = min(dnd.rolls)
-    else:
-        dnd.roll_no_output("1d20")
-        print(dnd.rolls)
-        dice = dnd.rolls[-1]
+class Game:
+    def __init__(self):
+        self.user_advantage = "None"
+        self.enemy_perception = 1
+        self.stealth_check
+    
+    def advantage(self, roll_no_output, ):
+        dnd.rolls = []
+        self.user_advantage = input("Do you have Advantage or Disadvantage? (A, D, or None) ")
+        if self.user_advantage.lower().strip() == 'a':
+            dnd.roll_no_output("2d20")
+            print(dnd.rolls)
+            dice = max(dnd.rolls)
+        elif self.user_advantage.lower().strip() == 'd':
+            dnd.roll_no_output("2d20")
+            print(dnd.rolls)
+            dice = min(dnd.rolls)
+        else:
+            dnd.roll_no_output("1d20")
+            print(dnd.rolls)
+            dice = dnd.rolls[-1]
+    
+    def user_check(self, roll_no_output, advantage, ):
+        user_level = input("What is your character's level? ")
+        if user_level == "":
+            user_level = 1
 
-    user_level = input("What is your character's level? ")
+        proficiency_bonus = math.ceil((user_level / 4) + 1)
 
-    try:
-        user_level = int(user_level)
-    except ValueError:
-        print("Invalid input. Please enter a number for the level.")
-        exit()
+        is_user_dex = input("Do you know your character's dexterity modifier? (Y/N) ").lower().strip()
+        if is_user_dex not in ['y', 'n']:
+            is_user_dex = 'n'
 
-    proficiency_bonus = math.ceil((user_level / 4) + 1)
+        stealth_proficiency = input("Do you have proficiency in the Stealth skill? (Y/N) ").lower().strip()
+        if stealth_proficiency not in ['y', 'n']:
+            stealth_proficiency = 'n'
+        stealth_expertise = "n"
+        if stealth_proficiency == "y":
+            stealth_expertise = input("Do you have expertise in the Stealth skill? (Y/N) ").lower().strip()
+            if stealth_expertise not in ['y', 'n']:
+                stealth_expertise = 'n'
 
-    user_input = input("Do you know your character's dexterity modifier? (Y/N) ").lower().strip()
+        user_dexterity = 1
+        if is_user_dex == "y":
+                user_dexterity = int(input("What is your character's dexterity modifier? ").strip())
+                if user_dexterity == "" or TypeError:
+                    user_dexterity = 1
 
-    stealth_proficiency = input("Do you have proficiency in the Stealth skill? (Y/N) ").lower().strip()
-    stealth_expertise = "n"
-    if stealth_proficiency == "y":
-        stealth_expertise = input("Do you have expertise in the Stealth skill? (Y/N) ").lower().strip()
+        elif is_user_dex == "n":
+                dex_score = int(input("What is your character's dexterity score? ").strip())
+                if dex_score == "" or TypeError:
+                    dex_score = 1
+                user_dexterity = (dex_score - 10) // 2
 
-    user_dexterity = 0
-    if user_input == "y":
-        try:
-            user_dexterity = int(input("What is your character's dexterity modifier? ").strip())
-        except ValueError:
-            print("Invalid input. Please enter a number for the dexterity modifier.")
-            exit()
-    elif user_input == "n":
-        try:
-            dex_score = int(input("What is your character's dexterity score? ").strip())
-            user_dexterity = (dex_score - 10) // 2
-        except ValueError:
-            print("Invalid input. Please enter a number for the dexterity score.")
-            exit()
-    else:
-        print("Invalid input for dexterity modifier.")
-        exit()
+        print(f"You rolled a {dice}")
 
-    print(f"You rolled a {dice}")
+        self.stealth_check = dice + user_dexterity
+        if stealth_expertise == "y":
+            stealth_check += (proficiency_bonus * 2)
+        elif stealth_proficiency == "y":
+            self.stealth_check += proficiency_bonus
 
-    stealth_check = dice + user_dexterity
-    if stealth_expertise == "y":
-        stealth_check += (proficiency_bonus * 2)
-    elif stealth_proficiency == "y":
-        stealth_check += proficiency_bonus
+        print(f"Your stealth check is {self.stealth_check}.")
+        
+        return self.stealth_check
+    
+    def enemy_check(self, roll_no_output, advantage, ):
+        is_enemy_check = input("Do you know the enemy's perception check? (Y/N) ").lower().strip()
+        if is_enemy_check not in ['y', 'n']:
+            is_enemy_check = "n"
 
-    print(f"Your stealth check is {stealth_check}.")
-
-    enemy_stat_block = input("Do you know the enemy's stat block? (Y/N) ").lower().strip()
-    if enemy_stat_block not in ['y', 'n']:
-        print("Invalid input for stat block. Please enter 'Y' or 'N'.")
-        exit()
-
-    if enemy_stat_block == "n":
-        try:
+        if is_enemy_check == "n":
             enemy_challenge_rating = float(input("What is the challenge rating of the enemy? ").strip())
+            if enemy_challenge_rating == "" or TypeError:
+                enemy_challenge_rating = 0
 
             if enemy_challenge_rating == 0:
                 enemy_bonus = 2
             elif enemy_challenge_rating > 0:
                 enemy_bonus = math.ceil(enemy_challenge_rating / 4) + 1
+
+
+            dnd.rolls = []
+            if self.user_advantage.lower().strip() == 'd':
+                dnd.roll_no_output("2d20")
+                print(dnd.rolls)
+                enemy_dice = max(dnd.rolls)
+            elif self.user_advantage.lower().strip() == 'a':
+                dnd.roll_no_output("2d20")
+                print(dnd.rolls)
+                enemy_dice = min(dnd.rolls)
             else:
-                print("Invalid input for challenge rating.")
-        except ValueError:
-            print("Invalid input. Please enter a number for the challenge rating.")
-            exit()
+                dnd.roll_no_output("1d20")
+                print(dnd.rolls)
+                enemy_dice = dnd.rolls[-1]
 
-        enemy_check = random.randint(1, 20)
+            
+            enemy_wis = input("Do you know the enemy's wisdom modifier? (Y/N) ").lower().strip()
+            if enemy_wis not in ['y', 'n']:
+                enemy_wis = 'n'
 
-        try:
-            dm = input("Do you know the enemy's wisdom modifier? (Y/N) ").lower().strip()
+            if enemy_wis == "y":
+                enemy_wisdom = int(input("What is the enemy's wisdom modifier? ").strip())
+                if enemy_wisdom == "" or TypeError:
+                    enemy_wisdom = 1
+            elif enemy_wis == "n":
+                enemy_wisdom = int(input("What is your enemy's wisdom score? ").strip())
+                if enemy_wisdom == "" or TypeError:
+                    enemy_wisdom = 1
+                enemy_wisdom = (enemy_wisdom - 10) // 2
 
-            if dm == "y":
-                try:
-                    enemy_wisdom = int(input("What is the enemy's wisdom modifier? ").strip())
-                except ValueError:
-                    print("Invalid input. Please enter a number for the wisdom modifier.")
-                    exit()
-            elif dm == "n":
-                try:
-                    enemy_wisdom = int(input("What is your enemy's wisdom score? ").strip())
-                    enemy_wisdom = (enemy_wisdom - 10) // 2
-                except ValueError:
-                    print("Invalid input. Please enter a number for the wisdom score.")
-                    exit()
-            else:
-                print("Invalid input for wisdom modifier.")
-        except ValueError:
-            print("Invalid input. Please enter a number for the wisdom modifier.")
-            exit()
+            enemy_perception = enemy_dice + enemy_wisdom + enemy_bonus
 
-        enemy_perception = enemy_check + enemy_wisdom + enemy_bonus
+            print(f"The enemy rolled a {enemy_dice} and the enemy's perception check is {enemy_perception}.")
+        elif is_enemy_check == "y":
+                enemy_perception = int(input("What is the enemy's perception check? ").strip())
+                if enemy_perception == "" or TypeError:
+                    enemy_perception = 1
+        return self.enemy_perception
 
-        print(f"The enemy rolled a {enemy_check} and the enemy's perception check is {enemy_perception}.")
-    elif enemy_stat_block == "y":
-        try:
-            enemy_perception = int(input("What is the enemy's perception check? ").strip())
-        except ValueError:
-            print("Invalid input. Please enter a number for the perception check.")
-            exit()
+while True: 
 
-    if stealth_check > enemy_perception:
+    if Game.stealth_check > Game.enemy_perception:
         print("You are hidden from the enemy.")
     else:
         print("You failed the stealth check.")
