@@ -82,7 +82,6 @@ while True:
                 enemy_bonus = math.ceil(enemy_challenge_rating / 4) + 1
             else:
                 print("Invalid input for challenge rating.")
-                exit()
         except ValueError:
             print("Invalid input. Please enter a number for the challenge rating.")
             exit()
@@ -107,7 +106,6 @@ while True:
                     exit()
             else:
                 print("Invalid input for wisdom modifier.")
-                exit()
         except ValueError:
             print("Invalid input. Please enter a number for the wisdom modifier.")
             exit()
