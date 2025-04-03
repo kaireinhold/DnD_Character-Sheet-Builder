@@ -14,7 +14,7 @@ class Game:
         self.stealth_check = 1
         self.dice = 1
     
-    def advantage(self=__init__):
+    def advantage(self):
         self.user_advantage = "None"
 
         dnd.rolls = []
@@ -32,11 +32,11 @@ class Game:
             print(dnd.rolls)
             self.dice = dnd.rolls[-1]
     
-    def user_check(self=__init__):
+    def user_check(self):
         self.stealth_check = 1
 
         user_level = input("What is your character's level? ")
-        if user_level == "" or "1234567890" not in user_level:
+        if user_level == "" or not user_level.isdigit():
             user_level = 1
 
         proficiency_bonus = math.ceil((int(user_level) / 4) + 1)
@@ -57,12 +57,12 @@ class Game:
         user_dexterity = 1
         if is_user_dex == "y":
                 user_dexterity = input("What is your character's dexterity modifier? ").strip()
-                if user_dexterity == "" or "1234567890" not in user_dexterity:
+                if user_dexterity == "" or not user_dexterity.isdigit():
                     user_dexterity = 1
 
         elif is_user_dex == "n":
                 dex_score = input("What is your character's dexterity score? ").strip()
-                if dex_score == "" or "1234567890" not in dex_score:
+                if dex_score == "" or not dex_score.isdigit():
                     dex_score = 1
                 user_dexterity = (int(dex_score) - 10) // 2
 
@@ -78,7 +78,7 @@ class Game:
         
         return self.stealth_check
     
-    def enemy_check(self=__init__):
+    def enemy_check(self):
         self.enemy_perception = 1
 
         is_enemy_check = input("Do you know the enemy's perception check? (Y/N) ").lower().strip()
@@ -87,7 +87,7 @@ class Game:
 
         if is_enemy_check == "n":
             enemy_challenge_rating = input("What is the challenge rating of the enemy? ").strip()
-            if enemy_challenge_rating == "" or "1234567890" not in enemy_challenge_rating:
+            if enemy_challenge_rating == "" or not enemy_challenge_rating.isdigit():
                 enemy_challenge_rating = 0
 
             if float(enemy_challenge_rating) == 0:
@@ -117,11 +117,11 @@ class Game:
 
             if enemy_wis == "y":
                 enemy_wisdom = input("What is the enemy's wisdom modifier? ").strip()
-                if enemy_wisdom == "" or "1234567890" not in enemy_wisdom:
+                if enemy_wisdom == "" or not enemy_wisdom.isdigit():
                     enemy_wisdom = 1
             elif enemy_wis == "n":
                 enemy_wisdom = input("What is your enemy's wisdom score? ").strip()
-                if enemy_wisdom == "" or "1234567890" not in enemy_wisdom:
+                if enemy_wisdom == "" or not enemy_wisdom.isdigit():
                     enemy_wisdom = 1
                 enemy_wisdom = (int(enemy_wisdom) - 10) // 2
 
@@ -130,7 +130,7 @@ class Game:
             print(f"The enemy rolled a {enemy_dice} and the enemy's perception check is {self.enemy_perception}.")
         elif is_enemy_check == "y":
                 self.enemy_perception = int(input("What is the enemy's perception check? ").strip())
-                if self.enemy_perception == "" or "1234567890" not in self.enemy_perception:
+                if self.enemy_perception == "" or self.enemy_perception.isdigit():
                     self.enemy_perception = 1
         return self.enemy_perception
 
