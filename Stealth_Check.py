@@ -144,5 +144,3 @@ while True:
         print("You are hidden from the enemy.")
     else:
         print("You failed the stealth check.")
-        
-#NOTES: still need to finish turning everything into a modulized thing
