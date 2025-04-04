@@ -1,135 +1,106 @@
 import sqlite3
 import pandas as pd
-import os
-import pprint
-import sys
+import re
 
-# Import custom function library if needed
-import DnD_function_library  
+# Connect to your .db file
+conn = sqlite3.connect("DnD_Database.db")  # Use your correct path here
 
-# Delete existing database if it exists (for testing purposes)
-if os.path.exists("DnD_Database.db"):
-    os.remove("DnD_Database.db")
+# Load name mappings for interactive input display
+class_names = pd.read_sql_query("SELECT id, name FROM Classes", conn).set_index("id")["name"].to_dict()
+race_names = pd.read_sql_query("SELECT id, name FROM Races", conn).set_index("id")["name"].to_dict()
+backgrounds_data = pd.read_sql_query("SELECT id, name, skill_proficiencies FROM Backgrounds", conn)
 
-# Connect to the database
-conn = sqlite3.connect("DnD_Database.db")
-cursor = conn.cursor()
+def calculate_modifier(score):
+    return (score - 10) // 2
 
-# Enable foreign key constraints
-cursor.execute("PRAGMA foreign_keys = ON;")
+def calculate_proficiency_bonus(level):
+    return 2 + (level - 1) // 4
 
-# List all tables for verification
-cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-tables = cursor.fetchall()
-print("Tables in database:")
-pprint.pprint(tables)
+def create_character():
+    print("🛠️ Create a New D&D Character\n")
 
-def add_character(char_name, class_id, race_id, background_id, char_level=1, 
-                  strength=10, dexterity=10, constitution=10, intelligence=10, wisdom=10, charisma=10):
+    name = input("Character name: ")
 
-    # Check if character name already exists
-    cursor.execute("SELECT id FROM Characters WHERE name = ?", (char_name,))
-    existing_character = cursor.fetchone()
-    
-    if existing_character:
-        print(f"Error: A character with the name '{char_name}' already exists.")
+    print("\nChoose a Class:")
+    # Sort and display classes in alphabetical order with visible selection number
+    class_df = pd.read_sql_query("SELECT id, name FROM Classes", conn).sort_values("name").reset_index(drop=True)
+
+    print("\nChoose a Class:")
+    for i, row in class_df.iterrows():
+        print(f"{i + 1}: {row['name']}")
+    class_id = int(input("Enter class ID: "))
+    class_id = class_df.loc[class_choice, "id"]
+
+
+    print("\nChoose a Race:")
+    for id, rname in race_names.items():
+        print(f"{id}: {rname}")
+    race_id = int(input("Enter race ID: "))
+
+    print("\nChoose a Background:")
+    for _, row in backgrounds_data.iterrows():
+        print(f"{row['id']}: {row['name']} ({row['skill_proficiencies']})")
+    background_id = int(input("Enter background ID: "))
+
+    level = int(input("\nLevel (1–20): "))
+    str_score = int(input("Strength: "))
+    dex_score = int(input("Dexterity: "))
+    con_score = int(input("Constitution: "))
+    int_score = int(input("Intelligence: "))
+    wis_score = int(input("Wisdom: "))
+    cha_score = int(input("Charisma: "))
+
+    # Calculate modifiers and proficiency
+    modifiers = {stat: calculate_modifier(score) for stat, score in
+                 zip(["str", "dex", "con", "int", "wis", "cha"],
+                     [str_score, dex_score, con_score, int_score, wis_score, cha_score])}
+    prof_bonus = calculate_proficiency_bonus(level)
+
+    # Insert into Characters table
+    cursor = conn.cursor()
+    cursor.execute("""
+        INSERT INTO Characters (name, class_id, race_id, background_id, level,
+        str, dex, con, int, wis, cha,
+        str_mod, dex_mod, con_mod, int_mod, wis_mod, cha_mod,
+        proficiency_bonus)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """, (
+        name, class_id, race_id, background_id, level,
+        str_score, dex_score, con_score, int_score, wis_score, cha_score,
+        modifiers["str"], modifiers["dex"], modifiers["con"],
+        modifiers["int"], modifiers["wis"], modifiers["cha"],
+        prof_bonus
+    ))
+    character_id = cursor.lastrowid
+
+    # Handle skill proficiencies from background
+    skills_str = backgrounds_data.loc[backgrounds_data["id"] == background_id, "skill_proficiencies"].values[0]
+
+    # Extract skill names (either straight list or "2: ..." pick-list style)
+    if "2:" in skills_str:
+        print("\nChoose 2 skills from the following list:")
+        skill_names = [s.strip() for s in skills_str.split("2:")[1].split(",")]
+        for i, skill in enumerate(skill_names, 1):
+            print(f"{i}: {skill}")
+        chosen = input("Enter 2 numbers separated by commas: ").split(",")
+        skill_names = [skill_names[int(i.strip()) - 1] for i in chosen]
     else:
-        # Calculate ability modifiers based on ability scores
-        def ability_modifier(score):
-            return (score - 10) // 2
+        skill_names = [s.strip() for s in skills_str.split(",")]
 
-        str_mod = ability_modifier(strength)
-        dex_mod = ability_modifier(dexterity)
-        con_mod = ability_modifier(constitution)
-        int_mod = ability_modifier(intelligence)
-        wis_mod = ability_modifier(wisdom)
-        cha_mod = ability_modifier(charisma)
+    # Map skill names to IDs
+    skills_df = pd.read_sql_query("SELECT id, name FROM Skills", conn)
+    skill_id_map = dict(zip(skills_df["name"].str.lower(), skills_df["id"]))
 
-        # Calculate proficiency bonus based on level (D&D 5e rules)
-        def calculate_proficiency_bonus(level):
-            return 2 + (level - 1) // 4
+    for skill in skill_names:
+        skill_id = skill_id_map.get(skill.lower())
+        if skill_id:
+            cursor.execute(
+                "INSERT INTO Character_Skills (character_id, skill_id, proficiency) VALUES (?, ?, ?)",
+                (character_id, skill_id, 1)
+            )
 
-        proficiency_bonus = calculate_proficiency_bonus(char_level)
-
-        # Insert character into the database
-        cursor.execute("""
-            INSERT INTO Characters 
-            (name, class_id, race_id, background_id, level, 
-             str, dex, con, int, wis, cha, 
-             str_mod, dex_mod, con_mod, int_mod, wis_mod, cha_mod, proficiency_bonus)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-        """, (char_name, class_id, race_id, background_id, char_level, 
-              strength, dexterity, constitution, intelligence, wisdom, charisma, 
-              str_mod, dex_mod, con_mod, int_mod, wis_mod, cha_mod, proficiency_bonus))
-
-        # Get the new character's ID
-        cursor.execute("SELECT id FROM Characters WHERE name = ?", (char_name,))
-        character_id = cursor.fetchone()[0]
-
-        # Assign starting equipment from background
-        cursor.execute("SELECT starting_equipment FROM Backgrounds WHERE id = ?", (background_id,))
-        background_equipment = cursor.fetchone()
-
-        if background_equipment:
-            for item in background_equipment[0].split(', '):
-                cursor.execute("""
-                    INSERT INTO Character_Inventory (character_id, equipment_id, quantity)
-                    SELECT ?, id, 1 FROM Equipment WHERE name = ?;
-                """, (character_id, item))
-
-        # Assign skill proficiencies from background
-        cursor.execute("SELECT skill_proficiencies FROM Backgrounds WHERE id = ?", (background_id,))
-        background_skills = cursor.fetchone()
-
-        if background_skills:
-            for skill in background_skills[0].split(', '):
-                cursor.execute("""
-                    INSERT INTO Character_Skills (character_id, skill_id, proficiency)
-                    SELECT ?, id, 1 FROM Skills WHERE name = ?;
-                """, (character_id, skill))
-
-        # Assign starting weapons and armor from class
-        cursor.execute("SELECT starting_equipment FROM Classes WHERE id = ?", (class_id,))
-        class_equipment = cursor.fetchone()
-
-        if class_equipment:
-            for item in class_equipment[0].split(', '):
-                cursor.execute("""
-                    INSERT INTO Character_Inventory (character_id, equipment_id, quantity)
-                    SELECT ?, id, 1 FROM Equipment WHERE name = ?;
-                """, (character_id, item))
-
-        conn.commit()
-        print(f"Character '{char_name}' added successfully with class and background equipment, skill proficiencies, and proficiency bonus.")
-
-# Function to retrieve all characters
-def get_characters():    
-    cursor.execute("SELECT * FROM Characters")
-    rows = cursor.fetchall()
-    
-    for row in rows:
-        pprint.pprint(row)
-
-# Function to update character level
-def update_character_level(name, new_level):
-    cursor.execute("UPDATE Characters SET level = ? WHERE name = ?", (new_level, name))
-    
     conn.commit()
-    
-# Function to delete a character
-def delete_character(name):
-    cursor.execute("DELETE FROM Characters WHERE name = ?", (name,))
-    
-    conn.commit()
+    print(f"\n✅ Character '{name}' created successfully with ID {character_id}!")
 
-# Function to return characters as a DataFrame
-def get_characters_df():
-    df = pd.read_sql_query("SELECT * FROM Characters", conn)
-    return df
-
-#add_character("Aragorn", class_id=2, race_id=1, background_id=3, char_level=5, 
-#              strength=16, dexterity=14, constitution=14, intelligence=10, wisdom=12, charisma=14)
-
-
-
-conn.close()
+# To use it, just run:
+create_character()
