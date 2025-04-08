@@ -1,5 +1,27 @@
 {
-    "Characters": [],
+    "Characters": [
+        {
+            "background_id": 1,
+            "cha": 10,
+            "cha_mod": 0,
+            "class_id": 1,
+            "con": 10,
+            "con_mod": 0,
+            "dex": 10,
+            "dex_mod": 0,
+            "id": 2,
+            "int": 10,
+            "int_mod": 0,
+            "level": 1,
+            "name": "example",
+            "proficiency_bonus": 2,
+            "race_id": 1,
+            "str": 10,
+            "str_mod": 0,
+            "wis": 10,
+            "wis_mod": 0
+        }
+    ],
     "Classes": [
         {
             "description": null,
@@ -288,11 +310,51 @@
             "stat": "Wis"
         }
     ],
-    "Character_Skills": [],
-    "Equipment": [],
-    "Character_Inventory": [],
-    "Spells": [],
-    "Character_Spells": [],
+    "Character_Skills": [
+        {
+            "character_id": 2,
+            "id": 3,
+            "proficiency": 0,
+            "skill_id": 1
+        }
+    ],
+    "Equipment": [
+        {
+            "description": "example item",
+            "id": 1,
+            "name": "example",
+            "type": "example",
+            "weight": null
+        }
+    ],
+    "Character_Inventory": [
+        {
+            "character_id": 2,
+            "equipment_id": 1,
+            "id": 1,
+            "quantity": 1
+        }
+    ],
+    "Spells": [
+        {
+            "casting_time": "example",
+            "components": "example",
+            "description": "example spell",
+            "duration": "example",
+            "id": 1,
+            "level": 0,
+            "name": "example",
+            "range": "example",
+            "school": "example"
+        }
+    ],
+    "Character_Spells": [
+        {
+            "character_id": 2,
+            "id": 1,
+            "spell_id": 1
+        }
+    ],
     "Races": [
         {
             "ability_bonus": "input +1, input +1",
