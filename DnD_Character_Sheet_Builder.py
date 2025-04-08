@@ -7,6 +7,7 @@ import sys
 import tkinter as tk
 from tkinter import ttk, messagebox
 import os
+import json
 import DnD_function_library
 from DnD_function_library import Dnd
 
@@ -255,6 +256,79 @@ Movement Speed: {dnd.movement_speed}\n""")
                 print(file.read())
                 print(f'Absolute path to the file: {full_path}')
                 file.close()
+                
+    char_data = {
+        "name": dnd.char_name,
+        "class": dnd.user_class,
+        "race": dnd.user_race,
+        "level": dnd.user_level,
+        "alignment": alignment,
+        "stats": {
+            "Str": dnd.stat_types["Str"],
+            "Dex": dnd.stat_types["Dex"],
+            "Con": dnd.stat_types["Con"],
+            "Int": dnd.stat_types["Int"],
+            "Wis": dnd.stat_types["Wis"],
+            "Cha": dnd.stat_types["Cha"]
+        },
+        "modifiers": {
+            "Str": mod_str,
+            "Dex": mod_dex,
+            "Con": mod_con,
+            "Int": mod_int,
+            "Wis": mod_wis,
+            "Cha": mod_cha
+        },
+        "hp_max": dnd.hp_max,
+        "proficiency_bonus": proficiency_bonus,
+        "movement_speed": dnd.movement_speed,
+        "darkvision": dnd.darkvision,
+        "languages": dnd.languages
+    }
+    
+    save_to_json_file(char_data, username, dnd.char_name)
+
+def save_to_json_file(character_data, username, char_name):
+    folder_path = f"C:\\Users\\{username}\\Documents\\character_sheets"
+    os.makedirs(folder_path, exist_ok=True)
+    file_path = os.path.join(folder_path, "characters.json")
+
+    # Load existing data
+    if os.path.exists(file_path):
+        with open(file_path, "r", encoding="utf-8") as file:
+            try:
+                data = json.load(file)
+            except json.JSONDecodeError:
+                data = {
+                    "Characters": [],
+                    "Character_Skills": [],
+                    "Character_Inventory": [],
+                    "Character_Spells": []
+                }
+    else:
+        data = {
+            "Characters": [],
+            "Character_Skills": [],
+            "Character_Inventory": [],
+            "Character_Spells": []
+        }
+
+    # Remove old character data if it exists
+    data["Characters"] = [c for c in data["Characters"] if c["name"] != char_name]
+    data["Character_Skills"] = [s for s in data["Character_Skills"] if s["character_name"] != char_name]
+    data["Character_Inventory"] = [i for i in data["Character_Inventory"] if i["character_name"] != char_name]
+    data["Character_Spells"] = [s for s in data["Character_Spells"] if s["character_name"] != char_name]
+
+    # Add updated data
+    data["Characters"].append(character_data["character"])  # base profile
+    data["Character_Skills"].extend(character_data.get("skills", []))
+    data["Character_Inventory"].extend(character_data.get("inventory", []))
+    data["Character_Spells"].extend(character_data.get("spells", []))
+
+    # Write updated data back
+    with open(file_path, "w", encoding="utf-8") as file:
+        json.dump(data, file, indent=4)
+
 while True:
     Build_Character_Sheet()
 
