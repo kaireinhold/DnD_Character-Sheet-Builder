@@ -12,7 +12,7 @@ from DnD_function_library import Dnd
 
 dnd = Dnd()
 
-while True:
+def Build_Character_Sheet():
     dnd.rolls = []  
     start = input("Start? (y/n) ").lower().strip()  
     if start == "y":
@@ -48,7 +48,7 @@ while True:
         alignment = input("What is your alignment? (Chaotic Good, Neutral Good, Lawful Good, Lawful Neutral, True Neutral, Chaotic Neutral, Lawful Evil, Neutral Evil, Chaotic Evil) ").title()
 
     else:
-        break
+        sys.exit()
     if save.lower().strip() == "n":
         if dnd.char_name.lower() == "andrew" or dnd.char_name.lower() == "luca" or dnd.char_name.lower() == "kai" or dnd.char_name.lower() == "z" or dnd.char_name.lower() == "zurulien":
             print(f"""You are {dnd.char_name}!
@@ -255,6 +255,8 @@ Movement Speed: {dnd.movement_speed}\n""")
                 print(file.read())
                 print(f'Absolute path to the file: {full_path}')
                 file.close()
+while True:
+    Build_Character_Sheet()
 
 '''
 Features to be added!
