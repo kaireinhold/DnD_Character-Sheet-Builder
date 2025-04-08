@@ -1,0 +1,496 @@
+{
+    "Characters": [],
+    "Classes": [
+        {
+            "description": null,
+            "hit_die": "d12",
+            "id": 1,
+            "name": "barbarian",
+            "saving_throws": "Str, Con",
+            "stat_priority": "Str, Con, Dex, Wis, Cha, Int"
+        },
+        {
+            "description": null,
+            "hit_die": "d10",
+            "id": 2,
+            "name": "fighter",
+            "saving_throws": "Str, Con",
+            "stat_priority": "Str, Int, Con, Cha, Dex, Wis"
+        },
+        {
+            "description": null,
+            "hit_die": "d6",
+            "id": 3,
+            "name": "wizard",
+            "saving_throws": "Int, Wis",
+            "stat_priority": "Int, Dex, Con, Wis, Cha, Str"
+        },
+        {
+            "description": null,
+            "hit_die": "d8",
+            "id": 4,
+            "name": "rogue",
+            "saving_throws": "Dex, Int",
+            "stat_priority": "Dex, Con, Cha, Wis, Int, Str"
+        },
+        {
+            "description": null,
+            "hit_die": "d8",
+            "id": 5,
+            "name": "bard",
+            "saving_throws": "Dex, Cha",
+            "stat_priority": "Cha, Dex, Con, Wis, Int, Str"
+        },
+        {
+            "description": null,
+            "hit_die": "d8",
+            "id": 6,
+            "name": "druid",
+            "saving_throws": "Wis, Int",
+            "stat_priority": "Wis, Con, Dex, Int, Cha, Str"
+        },
+        {
+            "description": null,
+            "hit_die": "d10",
+            "id": 7,
+            "name": "paladin",
+            "saving_throws": "Wis, Cha",
+            "stat_priority": "Str, Cha, Con, Wis, Dex, Int"
+        },
+        {
+            "description": null,
+            "hit_die": "d8",
+            "id": 8,
+            "name": "cleric",
+            "saving_throws": "Wis, Cha",
+            "stat_priority": "Wis, Con, Str, Dex, Int, Cha"
+        },
+        {
+            "description": null,
+            "hit_die": "d8",
+            "id": 9,
+            "name": "monk",
+            "saving_throws": "Str, Dex",
+            "stat_priority": "Wis, Str, Con, Dex, Int, Cha"
+        },
+        {
+            "description": null,
+            "hit_die": "d10",
+            "id": 10,
+            "name": "ranger",
+            "saving_throws": "Str, Dex",
+            "stat_priority": "Str, Con, Dex, Con, Int, Wis "
+        },
+        {
+            "description": null,
+            "hit_die": "d6",
+            "id": 11,
+            "name": "sorcerer",
+            "saving_throws": "Con, Cha",
+            "stat_priority": "Cha, Con, Dex, Int, Wis, Str"
+        },
+        {
+            "description": null,
+            "hit_die": "d8",
+            "id": 12,
+            "name": "warlock",
+            "saving_throws": "Wis, Cha",
+            "stat_priority": "Cha, Con, Dex, Wis, Int, Str"
+        },
+        {
+            "description": null,
+            "hit_die": "d8",
+            "id": 13,
+            "name": "artificer",
+            "saving_throws": "Con, Int",
+            "stat_priority": "Int, Con, Dex, Wis, Cha, Str"
+        }
+    ],
+    "Backgrounds": [
+        {
+            "currency": "15gp",
+            "description": null,
+            "id": 1,
+            "languages": "input, input",
+            "name": "acolyte",
+            "other_proficiencies": null,
+            "skill_proficiencies": "Insight, Religion",
+            "starting_equipment": "holy symbol, prayer book/prayer wheel, 5 incense, vestments, set of common clothes"
+        },
+        {
+            "currency": "15gp",
+            "description": null,
+            "id": 2,
+            "languages": null,
+            "name": "criminal",
+            "other_proficiencies": "{Tool: [a gaming set, thieves' tools]}",
+            "skill_proficiencies": "Sleight of Hand, Stealth",
+            "starting_equipment": "crowbar, set of dark common clothes including a hood"
+        },
+        {
+            "currency": "10gp",
+            "description": null,
+            "id": 3,
+            "languages": null,
+            "name": "folk hero",
+            "other_proficiencies": "{Tool: [type of artisan's tools, vehicles (land)]}",
+            "skill_proficiencies": "Animal Handling, Survival",
+            "starting_equipment": "set of artisan's tools (of choice), shovel, iron pot, set of common clothes"
+        },
+        {
+            "currency": "1sp",
+            "description": null,
+            "id": 4,
+            "languages": "input, input from [Abyssal, Celestial, Deep Speech, Draconic, Infernal, Primordial, Sylvan, or Undercommon]",
+            "name": "haunted one",
+            "other_proficiencies": null,
+            "skill_proficiencies": "2: Arcana, Investigation, Religion, Survival",
+            "starting_equipment": "{monster hunter's pack: [chest, crowbar, hammer, 3 wooden stakes, holy symbol, flask of holy water, set of manacles, steel mirror, flask of oil, tinderbox, 3 torches]}, one trinket of significance, set of common clothes"
+        },
+        {
+            "currency": "25gp",
+            "description": null,
+            "id": 5,
+            "languages": "input",
+            "name": "noble",
+            "other_proficiencies": "{Tool: [type of gaming set]}",
+            "skill_proficiencies": "History, Persuasion",
+            "starting_equipment": "fine clothes, signet ring, scroll of pedigree"
+        },
+        {
+            "currency": "10gp",
+            "description": null,
+            "id": 6,
+            "languages": "input, input",
+            "name": "sage",
+            "other_proficiencies": null,
+            "skill_proficiencies": "Arcana, History",
+            "starting_equipment": "bottle of black ink, quill, small knife, letter from dead colleague, set of common clothes"
+        },
+        {
+            "currency": "10gp",
+            "description": null,
+            "id": 7,
+            "languages": null,
+            "name": "soldier",
+            "other_proficiencies": "{Tool: [type of gaming set, vehicles (land)]}",
+            "skill_proficiencies": "Athletics, Intimidation",
+            "starting_equipment": "insignia of rank, trophy from fallen enemy, set of bone dice/deck of cards, set of common clothes"
+        }
+    ],
+    "Skills": [
+        {
+            "description": null,
+            "id": 1,
+            "name": "Acrobatics",
+            "stat": "Dex"
+        },
+        {
+            "description": null,
+            "id": 2,
+            "name": "Animal Handling",
+            "stat": "Wis"
+        },
+        {
+            "description": null,
+            "id": 3,
+            "name": "Arcana",
+            "stat": "Int"
+        },
+        {
+            "description": null,
+            "id": 4,
+            "name": "Athletics",
+            "stat": "Str"
+        },
+        {
+            "description": null,
+            "id": 5,
+            "name": "Deception",
+            "stat": "Cha"
+        },
+        {
+            "description": null,
+            "id": 6,
+            "name": "History",
+            "stat": "Int"
+        },
+        {
+            "description": null,
+            "id": 7,
+            "name": "Insight",
+            "stat": "Wis"
+        },
+        {
+            "description": null,
+            "id": 8,
+            "name": "Intimidation",
+            "stat": "Cha"
+        },
+        {
+            "description": null,
+            "id": 9,
+            "name": "Investigation",
+            "stat": "Int"
+        },
+        {
+            "description": null,
+            "id": 10,
+            "name": "Medicine",
+            "stat": "Wis"
+        },
+        {
+            "description": null,
+            "id": 11,
+            "name": "Nature",
+            "stat": "Int"
+        },
+        {
+            "description": null,
+            "id": 12,
+            "name": "Perception",
+            "stat": "Wis"
+        },
+        {
+            "description": null,
+            "id": 13,
+            "name": "Performance",
+            "stat": "Cha"
+        },
+        {
+            "description": null,
+            "id": 14,
+            "name": "Persuasion",
+            "stat": "Cha"
+        },
+        {
+            "description": null,
+            "id": 15,
+            "name": "Religion",
+            "stat": "Int"
+        },
+        {
+            "description": null,
+            "id": 16,
+            "name": "Sleight of Hand",
+            "stat": "Dex"
+        },
+        {
+            "description": null,
+            "id": 17,
+            "name": "Stealth",
+            "stat": "Dex"
+        },
+        {
+            "description": null,
+            "id": 18,
+            "name": "Survival",
+            "stat": "Wis"
+        }
+    ],
+    "Character_Skills": [],
+    "Equipment": [],
+    "Character_Inventory": [],
+    "Spells": [],
+    "Character_Spells": [],
+    "Races": [
+        {
+            "ability_bonus": "input +1, input +1",
+            "darkvision": "True",
+            "description": null,
+            "id": 1,
+            "languages": "common, dwarvish",
+            "movement_speed": 25,
+            "name": "dwarf"
+        },
+        {
+            "ability_bonus": "input +1, input +1, input +1",
+            "darkvision": "True",
+            "description": null,
+            "id": 2,
+            "languages": "common, orc",
+            "movement_speed": 30,
+            "name": "half-orc"
+        },
+        {
+            "ability_bonus": "input +1, input +1",
+            "darkvision": "True",
+            "description": null,
+            "id": 3,
+            "languages": "common, elven",
+            "movement_speed": 30,
+            "name": "elf"
+        },
+        {
+            "ability_bonus": "input +1, input +1",
+            "darkvision": "False",
+            "description": null,
+            "id": 4,
+            "languages": "common, halfling",
+            "movement_speed": 25,
+            "name": "halfling"
+        },
+        {
+            "ability_bonus": "input +1, input +1, input +1, input +1, input +1, input +1",
+            "darkvision": "False",
+            "description": null,
+            "id": 5,
+            "languages": "common, input",
+            "movement_speed": 30,
+            "name": "human"
+        },
+        {
+            "ability_bonus": "input +1, input +1, input +1",
+            "darkvision": "False",
+            "description": null,
+            "id": 6,
+            "languages": "common, draconic",
+            "movement_speed": 30,
+            "name": "dragonborn"
+        },
+        {
+            "ability_bonus": "input +1, input +1",
+            "darkvision": "True",
+            "description": null,
+            "id": 7,
+            "languages": "common, gnomish",
+            "movement_speed": 25,
+            "name": "gnome"
+        },
+        {
+            "ability_bonus": "input +1, input +1",
+            "darkvision": "True",
+            "description": null,
+            "id": 8,
+            "languages": "common, elven, input",
+            "movement_speed": 30,
+            "name": "half-elf"
+        },
+        {
+            "ability_bonus": "input +1, input +1",
+            "darkvision": "True",
+            "description": null,
+            "id": 9,
+            "languages": "common, infernal",
+            "movement_speed": 30,
+            "name": "tiefling"
+        },
+        {
+            "ability_bonus": "input +1, input +1, input +1",
+            "darkvision": "True",
+            "description": null,
+            "id": 10,
+            "languages": "common, input",
+            "movement_speed": 30,
+            "name": "aasimar"
+        },
+        {
+            "ability_bonus": "input +1, input +1, input +1",
+            "darkvision": "True",
+            "description": null,
+            "id": 11,
+            "languages": "common, input",
+            "movement_speed": 30,
+            "name": "changeling"
+        },
+        {
+            "ability_bonus": "input +1, input +1, input +1",
+            "darkvision": "True",
+            "description": null,
+            "id": 12,
+            "languages": "common, input",
+            "movement_speed": 30,
+            "name": "kenku"
+        },
+        {
+            "ability_bonus": "input +1, input +1, input +1",
+            "darkvision": "True",
+            "description": null,
+            "id": 13,
+            "languages": "common, input",
+            "movement_speed": 30,
+            "name": "shifter"
+        },
+        {
+            "ability_bonus": "input +1, input +1, input +1",
+            "darkvision": "False",
+            "description": null,
+            "id": 14,
+            "languages": "common, input",
+            "movement_speed": 30,
+            "name": "aarakocra"
+        },
+        {
+            "ability_bonus": "input +1, input +1, input +1",
+            "darkvision": "True",
+            "description": null,
+            "id": 15,
+            "languages": "common, input",
+            "movement_speed": 30,
+            "name": "kobold"
+        },
+        {
+            "ability_bonus": "input +1, input +1, input +1",
+            "darkvision": "True",
+            "description": null,
+            "id": 16,
+            "languages": "common, input",
+            "movement_speed": 30,
+            "name": "fire genasi"
+        },
+        {
+            "ability_bonus": "input +1, input +1, input +1",
+            "darkvision": "True",
+            "description": null,
+            "id": 17,
+            "languages": "common, input",
+            "movement_speed": 35,
+            "name": "air genasi"
+        },
+        {
+            "ability_bonus": "input +1, input +1, input +1",
+            "darkvision": "True",
+            "description": null,
+            "id": 18,
+            "languages": "common, input",
+            "movement_speed": 30,
+            "name": "water genasi"
+        },
+        {
+            "ability_bonus": "input +1, input +1, input +1",
+            "darkvision": "True",
+            "description": null,
+            "id": 19,
+            "languages": "common, input",
+            "movement_speed": 30,
+            "name": "earth genasi"
+        },
+        {
+            "ability_bonus": "input +1, input +1, input +1",
+            "darkvision": "False",
+            "description": null,
+            "id": 20,
+            "languages": "common, input",
+            "movement_speed": 30,
+            "name": "warforged"
+        },
+        {
+            "ability_bonus": "input +1, input +1, input +1",
+            "darkvision": "True",
+            "description": null,
+            "id": 21,
+            "languages": "common, undercommon",
+            "movement_speed": 30,
+            "name": "arachne"
+        },
+        {
+            "ability_bonus": "input +1, input +1, input +1",
+            "darkvision": "True",
+            "description": null,
+            "id": 22,
+            "languages": "common, giant",
+            "movement_speed": 30,
+            "name": "goliath"
+        }
+    ]
+}
