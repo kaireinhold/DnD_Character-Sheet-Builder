@@ -13,7 +13,56 @@ from DnD_function_library import Dnd
 
 dnd = Dnd()
 
-def Build_Character_Sheet():
+def save_to_json_file(character_data, username, char_name):
+    folder_path = f"C:\\Users\\{username}\\Documents\\character_sheets"
+    os.makedirs(folder_path, exist_ok=True)
+    file_path = os.path.join(folder_path, "DnD_Database.json")  # adjust name if needed
+
+    # Load existing JSON
+    if os.path.exists(file_path):
+        with open(file_path, "r", encoding="utf-8") as file:
+            try:
+                data = json.load(file)
+            except json.JSONDecodeError:
+                data = {
+                    "Characters": [],
+                    "Character_Skills": [],
+                    "Character_Inventory": [],
+                    "Character_Spells": []
+                }
+    else:
+        data = {
+            "Characters": [],
+            "Character_Skills": [],
+            "Character_Inventory": [],
+            "Character_Spells": []
+        }
+
+    # Remove existing character (by matching the key)
+    data["Characters"] = [
+        c for c in data["Characters"] if dnd.char_name not in c
+    ]
+    data["Character_Skills"] = [
+        s for s in data["Character_Skills"] if dnd.char_name not in s
+    ]
+    data["Character_Inventory"] = [
+        i for i in data["Character_Inventory"] if dnd.char_name not in i
+    ]
+    data["Character_Spells"] = [
+        s for s in data["Character_Spells"] if dnd.char_name not in s
+    ]
+
+    # Add the new character
+    data["Characters"].append({dnd.char_name: character_data["character"]})
+    data["Character_Skills"].append({f"{dnd.char_name}_skills": character_data.get("skills", [])})
+    data["Character_Inventory"].append({f"{dnd.char_name}_inventory": character_data.get("inventory", [])})
+    data["Character_Spells"].append({f"{dnd.char_name}_spells": character_data.get("spells", [])})
+
+    # Save updated data
+    with open(file_path, "w", encoding="utf-8") as file:
+        json.dump(data, file, indent=4)
+
+while True:
     dnd.rolls = []  
     start = input("Start? (y/n) ").lower().strip()  
     if start == "y":
@@ -258,79 +307,75 @@ Movement Speed: {dnd.movement_speed}\n""")
                 file.close()
                 
     char_data = {
-        "name": dnd.char_name,
-        "class": dnd.user_class,
+    "Characters": [
+        {
+        dnd.char_name : {
         "race": dnd.user_race,
+        "class": ' '.join([str(x) for x in [*dnd.user_class]]).title(),
         "level": dnd.user_level,
-        "alignment": alignment,
-        "stats": {
-            "Str": dnd.stat_types["Str"],
-            "Dex": dnd.stat_types["Dex"],
-            "Con": dnd.stat_types["Con"],
-            "Int": dnd.stat_types["Int"],
-            "Wis": dnd.stat_types["Wis"],
-            "Cha": dnd.stat_types["Cha"]
-        },
-        "modifiers": {
-            "Str": mod_str,
-            "Dex": mod_dex,
-            "Con": mod_con,
-            "Int": mod_int,
-            "Wis": mod_wis,
-            "Cha": mod_cha
-        },
+        "background": None,  # TO BE ADDED LATER
+        "str": dnd.stat_types["Str"],
+        "dex": dnd.stat_types["Dex"],
+        "con": dnd.stat_types["Con"],
+        "int": dnd.stat_types["Int"],
+        "wis": dnd.stat_types["Wis"],
+        "cha": dnd.stat_types["Cha"],
+        "str_mod": mod_str,
+        "dex_mod": mod_dex,
+        "con_mod": mod_con,
+        "int_mod": mod_int,
+        "wis_mod": mod_wis,
+        "cha_mod": mod_cha,
+        "proficiency_bonus": math.ceil(dnd.user_level / 4) + 1,
         "hp_max": dnd.hp_max,
-        "proficiency_bonus": proficiency_bonus,
-        "movement_speed": dnd.movement_speed,
-        "darkvision": dnd.darkvision,
-        "languages": dnd.languages
+        }
     }
+    ],
+    "Character_Skills": [
+        {
+            f"{dnd.char_name}_skills" : {
+            "Acrobatics" : { "proficiency": False, "score" : mod_dex + proficiency_bonus if char_data["Character_Skills"][f"{dnd.char_name}_skills"]["Acrobatics"]["proficiency"] == True else mod_dex},
+            "Animal Handling" : { "proficiency": False, "score" : mod_wis + proficiency_bonus if char_data["Character_Skills"][f"{dnd.char_name}_skills"]["Animal Handling"]["proficiency"] == True else mod_wis},
+            "Arcana" : { "proficiency": False, "score" : mod_int + proficiency_bonus if char_data["Character_Skills"][f"{dnd.char_name}_skills"]["Arcana"]["proficiency"] == True else mod_int},
+            "Athletics" : { "proficiency": False, "score" : mod_str + proficiency_bonus if char_data["Character_Skills"][f"{dnd.char_name}_skills"]["Athletics"]["proficiency"] == True else mod_str},
+            "Deception" : { "proficiency": False, "score" : mod_cha + proficiency_bonus if char_data["Character_Skills"][f"{dnd.char_name}_skills"]["Deception"]["proficiency"] == True else mod_cha},
+            "History" : { "proficiency": False, "score" : mod_int + proficiency_bonus if char_data["Character_Skills"][f"{dnd.char_name}_skills"]["History"]["proficiency"] == True else mod_int},
+            "Insight" : { "proficiency": False, "score" : mod_wis + proficiency_bonus if char_data["Character_Skills"][f"{dnd.char_name}_skills"]["Insight"]["proficiency"] == True else mod_wis},
+            "Intimidation" : { "proficiency": False, "score" : mod_cha + proficiency_bonus if char_data["Character_Skills"][f"{dnd.char_name}_skills"]["Intimidation"]["proficiency"] == True else mod_cha},
+            "Investigation" : { "proficiency": False, "score" : mod_int + proficiency_bonus if char_data["Character_Skills"][f"{dnd.char_name}_skills"]["Investigation"]["proficiency"] == True else mod_int},
+            "Medicine" : { "proficiency": False, "score" : mod_wis + proficiency_bonus if char_data["Character_Skills"][f"{dnd.char_name}_skills"]["Medicine"]["proficiency"] == True else mod_wis},
+            "Nature" : { "proficiency": False, "score" : mod_int + proficiency_bonus if char_data["Character_Skills"][f"{dnd.char_name}_skills"]["Nature"]["proficiency"] == True else mod_int},
+            "Perception" : { "proficiency": False, "score" : mod_wis + proficiency_bonus if char_data["Character_Skills"][f"{dnd.char_name}_skills"]["Perception"]["proficiency"] == True else mod_wis},
+            "Performance" : { "proficiency": False, "score" : mod_cha + proficiency_bonus if char_data["Character_Skills"][f"{dnd.char_name}_skills"]["Performance"]["proficiency"] == True else mod_cha},
+            "Persuasion" : { "proficiency": False, "score" : mod_cha + proficiency_bonus if char_data["Character_Skills"][f"{dnd.char_name}_skills"]["Persuasion"]["proficiency"] == True else mod_cha},
+            "Religion" : { "proficiency": False, "score" : mod_int + proficiency_bonus if char_data["Character_Skills"][f"{dnd.char_name}_skills"]["Religion"]["proficiency"] == True else mod_int},
+            "Sleight of Hand" : { "proficiency": False, "score" : mod_dex + proficiency_bonus if char_data["Character_Skills"][f"{dnd.char_name}_skills"]["Sleight of Hand"]["proficiency"] == True else mod_dex},
+            "Stealth" : { "proficiency": False, "score" : mod_dex + proficiency_bonus if char_data["Character_Skills"][f"{dnd.char_name}_skills"]["Stealth"]["proficiency"] == True else mod_dex},
+            "Survival" : { "proficiency": False, "score" : mod_wis + proficiency_bonus if char_data["Character_Skills"][f"{dnd.char_name}_skills"]["Survival"]["proficiency"] == True else mod_wis},
+            }
+        }
+    ],      # TO DO: ADD NON-HARDCODED PROFICIENCY
+    "Character_Inventory": [
+        {
+            f"{dnd.char_name}_inventory" : {
+                "example_equipment" : {
+                "quantity": 1
+                }
+            }
+        }
+    ],   # TO DO: ADD EQUIPMENT BASED ON BACKGROUND
+    "Character_Spells": [
+        {
+            f"{dnd.char_name}_spells" : {
+            ["example_spell_1", "example_spell_2"],
+            }
+        }
+    ]      # TO DO: ADD SPELL SELECTION AND SUCH BASED ON CLASS AND LEVEL
+}
+
     
     save_to_json_file(char_data, username, dnd.char_name)
 
-def save_to_json_file(character_data, username, char_name):
-    folder_path = f"C:\\Users\\{username}\\Documents\\character_sheets"
-    os.makedirs(folder_path, exist_ok=True)
-    file_path = os.path.join(folder_path, "characters.json")
-
-    # Load existing data
-    if os.path.exists(file_path):
-        with open(file_path, "r", encoding="utf-8") as file:
-            try:
-                data = json.load(file)
-            except json.JSONDecodeError:
-                data = {
-                    "Characters": [],
-                    "Character_Skills": [],
-                    "Character_Inventory": [],
-                    "Character_Spells": []
-                }
-    else:
-        data = {
-            "Characters": [],
-            "Character_Skills": [],
-            "Character_Inventory": [],
-            "Character_Spells": []
-        }
-
-    # Remove old character data if it exists
-    data["Characters"] = [c for c in data["Characters"] if c["name"] != char_name]
-    data["Character_Skills"] = [s for s in data["Character_Skills"] if s["character_name"] != char_name]
-    data["Character_Inventory"] = [i for i in data["Character_Inventory"] if i["character_name"] != char_name]
-    data["Character_Spells"] = [s for s in data["Character_Spells"] if s["character_name"] != char_name]
-
-    # Add updated data
-    data["Characters"].append(character_data["character"])  # base profile
-    data["Character_Skills"].extend(character_data.get("skills", []))
-    data["Character_Inventory"].extend(character_data.get("inventory", []))
-    data["Character_Spells"].extend(character_data.get("spells", []))
-
-    # Write updated data back
-    with open(file_path, "w", encoding="utf-8") as file:
-        json.dump(data, file, indent=4)
-
-while True:
-    Build_Character_Sheet()
 
 '''
 Features to be added!

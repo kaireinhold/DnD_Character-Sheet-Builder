@@ -150,15 +150,14 @@ class Dnd:
                         break
                     self.roll_stats = 5
 
-        # if self.char_name.lower() == "z" or self.char_name.lower() == "zurulien":
-        #     self.stats.sort()
-        #     self.stat_types = {"Str": self.stats[4], "Dex": self.stats[0], "Con": self.stats[1], "Int": self.stats[5], "Wis": self.stats[3], "Cha": self.stats[2]}
-        # elif self.char_name.lower() == "andrew" or self.char_name.lower() == "luca" or self.char_name.lower() == "kai":
-        #     # Special Easter egg for friends/fellow DMs
-        #     self.stats = [20]
-        #     self.stat_types = {"Str": self.stats[0], "Dex": self.stats[0], "Con": self.stats[0], "Int": self.stats[0], "Wis": self.stats[0], "Cha": self.stats[0]}
-        # el
-        if u_class == None or u_class == "":
+        if self.char_name.lower() == "z" or self.char_name.lower() == "zurulien":
+            self.stats.sort()
+            self.stat_types = {"Str": self.stats[4], "Dex": self.stats[0], "Con": self.stats[1], "Int": self.stats[5], "Wis": self.stats[3], "Cha": self.stats[2]}
+        elif self.char_name.lower() == "andrew" or self.char_name.lower() == "luca" or self.char_name.lower() == "kai":
+            # Special Easter egg for friends/fellow DMs
+            self.stats = [20]
+            self.stat_types = {"Str": self.stats[0], "Dex": self.stats[0], "Con": self.stats[0], "Int": self.stats[0], "Wis": self.stats[0], "Cha": self.stats[0]}
+        elif u_class == None or u_class == "":
             self.stat_types = {"Str": self.stats[0], "Dex": self.stats[1], "Con": self.stats[2], "Int": self.stats[3], "Wis": self.stats[4], "Cha": self.stats[5]}
         else:
             if u_class[0].lower() == "barbarian":
@@ -369,19 +368,19 @@ class Dnd:
             self.movement_speed = 30
             self.darkvision = True
             self.languages = ["Common", "Giant"]
-        # elif self.user_race.lower().strip() == "starling" or self.user_race.lower().strip() == "bloodling" or self.user_race.lower().strip() == "core starling" or self.user_race.lower().strip() == "shadeling" or self.user_race.lower().strip() == "crystalling" or self.user_race.lower().strip() == "symbioling" or self.user_race.lower().strip() == "pure starling":
-        #     current_race = self.user_race
-        #     if self.user_race.lower().strip() != "pure starling":
-        #         prev_race = input("What race were you before? ")
-        #         self.set_race(prev_race)
-        #         self.movement_speed += 10
-        #     else:
-        #         self.set_race("human")
-        #         self.movement_speed += 15
-        #     self.user_race = current_race
-        #     self.stat_increase(2)
-        #     self.darkvision = True
-        #     self.languages.append("Sangulect")
+        elif self.user_race.lower().strip() == "starling" or self.user_race.lower().strip() == "bloodling" or self.user_race.lower().strip() == "core starling" or self.user_race.lower().strip() == "shadeling" or self.user_race.lower().strip() == "crystalling" or self.user_race.lower().strip() == "symbioling" or self.user_race.lower().strip() == "pure starling":
+            current_race = self.user_race
+            if self.user_race.lower().strip() != "pure starling":
+                prev_race = input("What race were you before? ")
+                self.set_race(prev_race)
+                self.movement_speed += 10
+            else:
+                self.set_race("human")
+                self.movement_speed += 15
+            self.user_race = current_race
+            self.stat_increase(2)
+            self.darkvision = True
+            self.languages.append("Sangulect")
         else:
             self.movement_speed = 30
             self.darkvision = False
@@ -451,7 +450,7 @@ class Dnd:
     def background(self, char_class=None, char_race=None):
         pass
 
-    def skill_proficiency(self, char_class=None, char_race=None):
+    def skill_proficiency(self, char_class=None, char_race=None, char_background=None):
         pass
 
     def give_equipment(self,):
