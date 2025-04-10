@@ -1,25 +1,30 @@
 {
     "Characters": [
         {
-            "example" : {
-            "background": "acolyte",
-            "cha": 10,
-            "cha_mod": 0,
-            "class": "Fighter",
-            "con": 10,
-            "con_mod": 0,
-            "dex": 10,
-            "dex_mod": 0,
-            "int": 10,
-            "int_mod": 0,
-            "level": 1,
-            "proficiency_bonus": 2,
-            "race": "Elf",
-            "str": 10,
-            "str_mod": 0,
-            "wis": 10,
-            "wis_mod": 0,
-            "hp_max": 50
+            "Example": {
+                "race": "Human",
+                "class": "Fighter",
+                "level": 10,
+                "background": null,
+                "str": 18,
+                "dex": 14,
+                "con": 18,
+                "int": 15,
+                "wis": 14,
+                "cha": 14,
+                "str_mod": 4,
+                "dex_mod": 2,
+                "con_mod": 4,
+                "int_mod": 2,
+                "wis_mod": 2,
+                "cha_mod": 2,
+                "proficiency_bonus": 4,
+                "hp_max": 93,
+                "languages": [
+                    "Common",
+                    "Elven"
+                ],
+                "alignment": "Chaotic Neutral"
             }
         }
     ],
@@ -275,9 +280,79 @@
     ],
     "Character_Skills": [
         {
-            "example_skills" : { 
-                "proficiency": false, 
-                "score" : 5
+            "Example_skills": {
+                "Acrobatics": {
+                    "proficiency": false,
+                    "score": 2
+                },
+                "Animal Handling": {
+                    "proficiency": false,
+                    "score": 2
+                },
+                "Arcana": {
+                    "proficiency": false,
+                    "score": 2
+                },
+                "Athletics": {
+                    "proficiency": false,
+                    "score": 4
+                },
+                "Deception": {
+                    "proficiency": false,
+                    "score": 2
+                },
+                "History": {
+                    "proficiency": false,
+                    "score": 2
+                },
+                "Insight": {
+                    "proficiency": false,
+                    "score": 2
+                },
+                "Intimidation": {
+                    "proficiency": false,
+                    "score": 2
+                },
+                "Investigation": {
+                    "proficiency": false,
+                    "score": 2
+                },
+                "Medicine": {
+                    "proficiency": false,
+                    "score": 2
+                },
+                "Nature": {
+                    "proficiency": false,
+                    "score": 2
+                },
+                "Perception": {
+                    "proficiency": false,
+                    "score": 2
+                },
+                "Performance": {
+                    "proficiency": false,
+                    "score": 2
+                },
+                "Persuasion": {
+                    "proficiency": false,
+                    "score": 2
+                },
+                "Religion": {
+                    "proficiency": false,
+                    "score": 2
+                },
+                "Sleight of Hand": {
+                    "proficiency": false,
+                    "score": 2
+                },
+                "Stealth": {
+                    "proficiency": false,
+                    "score": 2
+                },
+                "Survival": {
+                    "proficiency": false,
+                    "score": 2
+                }
             }
         }
     ],
@@ -291,9 +366,9 @@
     ],
     "Character_Inventory": [
         {
-            "example_inventory" : {
-                "example_equipment" : {
-                "quantity": 1
+            "Example_inventory": {
+                "example_equipment": {
+                    "quantity": 1
                 }
             }
         }
@@ -312,9 +387,10 @@
     ],
     "Character_Spells": [
         {
-            "example_spells" : {
-            "spell_name": "example"
-            }
+            "Example_spells": [
+                "example_spell_1",
+                "example_spell_2"
+            ]
         }
     ],
     "Races": [
