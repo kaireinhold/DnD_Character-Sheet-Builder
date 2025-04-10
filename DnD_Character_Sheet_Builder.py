@@ -13,7 +13,7 @@ from DnD_function_library import Dnd
 
 dnd = Dnd()
 
-def save_to_json_file(character_data, username, dnd.char_name):
+def save_to_json_file(character_data, username):
     folder_path = f"C:\\Users\\{username}\\Documents\\GitHub\\DnD_Character-Sheet-Builder"
     os.makedirs(folder_path, exist_ok=True)
     file_path = os.path.join(folder_path, "DnD_Database.json")
@@ -389,7 +389,7 @@ Movement Speed: {dnd.movement_speed}\n""")
     
     char_data["Character_Skills"].append({f"{dnd.char_name}_skills": skills})
     
-    save_to_json_file(char_data, username, dnd.char_name)
+    save_to_json_file(char_data, username)
 
 
 '''
