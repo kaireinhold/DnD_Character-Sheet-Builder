@@ -2,29 +2,30 @@
     "Characters": [
         {
             "Example": {
-                "race": "Human",
-                "class": "Fighter",
-                "level": 10,
+                "race": "Changeling",
+                "class": "Barbarian Fighter Wizard Rogue Bard Druid Paladin Cleric Monk Ranger Sorcerer Warlock Artificer",
+                "level": 26,
                 "background": null,
                 "str": 18,
-                "dex": 14,
-                "con": 18,
-                "int": 15,
-                "wis": 14,
-                "cha": 14,
+                "dex": 18,
+                "con": 20,
+                "int": 18,
+                "wis": 18,
+                "cha": 20,
                 "str_mod": 4,
-                "dex_mod": 2,
-                "con_mod": 4,
-                "int_mod": 2,
-                "wis_mod": 2,
-                "cha_mod": 2,
-                "proficiency_bonus": 4,
-                "hp_max": 93,
+                "dex_mod": 4,
+                "con_mod": 5,
+                "int_mod": 4,
+                "wis_mod": 4,
+                "cha_mod": 5,
+                "proficiency_bonus": 8,
+                "hp_max": 284,
                 "languages": [
                     "Common",
-                    "Elven"
+                    "Celestial"
                 ],
-                "alignment": "Chaotic Neutral"
+                "alignment": "Chaotic Neutral",
+                "initiative_bonus": 4
             }
         }
     ],
@@ -283,15 +284,15 @@
             "Example_skills": {
                 "Acrobatics": {
                     "proficiency": false,
-                    "score": 2
+                    "score": 4
                 },
                 "Animal Handling": {
                     "proficiency": false,
-                    "score": 2
+                    "score": 4
                 },
                 "Arcana": {
                     "proficiency": false,
-                    "score": 2
+                    "score": 4
                 },
                 "Athletics": {
                     "proficiency": false,
@@ -299,59 +300,59 @@
                 },
                 "Deception": {
                     "proficiency": false,
-                    "score": 2
+                    "score": 5
                 },
                 "History": {
                     "proficiency": false,
-                    "score": 2
+                    "score": 4
                 },
                 "Insight": {
                     "proficiency": false,
-                    "score": 2
+                    "score": 4
                 },
                 "Intimidation": {
                     "proficiency": false,
-                    "score": 2
+                    "score": 5
                 },
                 "Investigation": {
                     "proficiency": false,
-                    "score": 2
+                    "score": 4
                 },
                 "Medicine": {
                     "proficiency": false,
-                    "score": 2
+                    "score": 4
                 },
                 "Nature": {
                     "proficiency": false,
-                    "score": 2
+                    "score": 4
                 },
                 "Perception": {
                     "proficiency": false,
-                    "score": 2
+                    "score": 4
                 },
                 "Performance": {
                     "proficiency": false,
-                    "score": 2
+                    "score": 5
                 },
                 "Persuasion": {
                     "proficiency": false,
-                    "score": 2
+                    "score": 5
                 },
                 "Religion": {
                     "proficiency": false,
-                    "score": 2
+                    "score": 4
                 },
                 "Sleight of Hand": {
                     "proficiency": false,
-                    "score": 2
+                    "score": 4
                 },
                 "Stealth": {
                     "proficiency": false,
-                    "score": 2
+                    "score": 4
                 },
                 "Survival": {
                     "proficiency": false,
-                    "score": 2
+                    "score": 4
                 }
             }
         }

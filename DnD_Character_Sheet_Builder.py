@@ -329,6 +329,7 @@ Movement Speed: {dnd.movement_speed}\n""")
         "hp_max": dnd.hp_max,
         "languages" : dnd.languages,
         "alignment" : alignment,
+        "initiative_bonus" : mod_dex,
         }
     }
     ],
