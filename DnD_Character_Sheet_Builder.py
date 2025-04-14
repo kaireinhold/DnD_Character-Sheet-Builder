@@ -310,7 +310,7 @@ Movement Speed: {dnd.movement_speed}\n""")
         {
         dnd.char_name : {
         "race": dnd.user_race,
-        "class": ' '.join([str(x) for x in [*dnd.user_class]]).title(),
+        "class": dnd.user_class,
         "level": dnd.user_level,
         "background": None,  # TO BE ADDED LATER
         "str": dnd.stat_types["Str"],

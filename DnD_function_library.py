@@ -256,20 +256,14 @@ class Dnd:
     def set_level(self):
         
         self.user_level = int(input("What level is your character? (number) "))
-        
-        if self.user_level > 20:
-            self.stat_increase(), self.stat_increase(), self.stat_increase(), self.stat_increase()
-            for level in range(19, self.user_level+1, 4):
-                self.stat_increase()
-        if self.user_level >= 19:
-            self.stat_increase(), self.stat_increase(), self.stat_increase(), self.stat_increase(), self.stat_increase()
-        elif self.user_level >= 16:
-            self.stat_increase(), self.stat_increase(), self.stat_increase(), self.stat_increase()
-        elif self.user_level >= 12:
-            self.stat_increase(), self.stat_increase(), self.stat_increase()
-        elif self.user_level >= 8:
-            self.stat_increase(), self.stat_increase()
-        elif self.user_level >= 4:
+        if self.user_level == 19:
+            number = 20
+        else:
+            number = self.user_level
+
+        counter = 0
+        while counter != len(range(4, number+1, 4))+4:
+            counter += 1
             self.stat_increase()
     
         return self.user_level

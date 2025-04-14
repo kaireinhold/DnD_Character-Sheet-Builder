@@ -3,29 +3,43 @@
         {
             "Example": {
                 "race": "Changeling",
-                "class": "Barbarian Fighter Wizard Rogue Bard Druid Paladin Cleric Monk Ranger Sorcerer Warlock Artificer",
-                "level": 26,
+                "class": [
+                    "Barbarian",
+                    "Fighter",
+                    "Wizard",
+                    "Rogue",
+                    "Bard",
+                    "Druid",
+                    "Paladin",
+                    "Cleric",
+                    "Monk",
+                    "Ranger",
+                    "Sorcerer",
+                    "Warlock",
+                    "Artificer"
+                ],
+                "level": 52,
                 "background": null,
-                "str": 18,
-                "dex": 18,
+                "str": 20,
+                "dex": 20,
                 "con": 20,
                 "int": 18,
                 "wis": 18,
                 "cha": 20,
-                "str_mod": 4,
-                "dex_mod": 4,
+                "str_mod": 5,
+                "dex_mod": 5,
                 "con_mod": 5,
                 "int_mod": 4,
                 "wis_mod": 4,
                 "cha_mod": 5,
-                "proficiency_bonus": 8,
-                "hp_max": 284,
+                "proficiency_bonus": 14,
+                "hp_max": 573,
                 "languages": [
                     "Common",
                     "Celestial"
                 ],
                 "alignment": "Chaotic Neutral",
-                "initiative_bonus": 4
+                "initiative_bonus": 5
             }
         }
     ],
@@ -284,7 +298,7 @@
             "Example_skills": {
                 "Acrobatics": {
                     "proficiency": false,
-                    "score": 4
+                    "score": 5
                 },
                 "Animal Handling": {
                     "proficiency": false,
@@ -296,7 +310,7 @@
                 },
                 "Athletics": {
                     "proficiency": false,
-                    "score": 4
+                    "score": 5
                 },
                 "Deception": {
                     "proficiency": false,
@@ -344,11 +358,11 @@
                 },
                 "Sleight of Hand": {
                     "proficiency": false,
-                    "score": 4
+                    "score": 5
                 },
                 "Stealth": {
                     "proficiency": false,
-                    "score": 4
+                    "score": 5
                 },
                 "Survival": {
                     "proficiency": false,
