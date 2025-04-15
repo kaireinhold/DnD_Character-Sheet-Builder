@@ -20,7 +20,7 @@ class Dnd:
         self.hp_max = 0
         self.equipment = None
         self.user_background = None
-        #self.
+        self.counter = 0
 
     def roll(self, di=None):
         """
@@ -213,9 +213,13 @@ class Dnd:
     
         if inc_amount == 1:
             stat_to_inc = input("What stat do you want to increase? (Choose 1: Str, Dex, Con, Int, Wis, Cha) ")
-            counter = [1]
-            for x in counter:
-                if stat_to_inc.lower().strip() == "str":
+            inc_list = stat_to_inc.split(" ")
+            if len(inc_list) > 1:
+                incs = inc_list
+                inc_list = [incs[0]]
+
+            for stat in inc_list:
+                if stat.lower().strip() == "str":
                     self.stat_types["Str"] += 2
                 elif stat_to_inc.lower().strip() == "dex":
                     self.stat_types["Dex"] += 2
@@ -227,6 +231,7 @@ class Dnd:
                     self.stat_types["Wis"] += 2
                 elif stat_to_inc.lower().strip() == "cha":
                     self.stat_types["Cha"] += 2
+                else: self.counter -= 1
 
         elif inc_amount == 2:
             stats_to_inc = input("What stats do you want to increase? (Choose 2, separate by a comma: Str, Dex, Con, Int, Wis, Cha) ")
@@ -248,23 +253,25 @@ class Dnd:
                     self.stat_types["Wis"] += 1
                 elif stat.lower().strip() == "cha":
                     self.stat_types["Cha"] += 1
+                else: self.counter -= 1
+        else: self.counter -= 1
 
         print(self.stat_types)
     
         return self.stat_types
 
     def set_level(self):
-        
         self.user_level = int(input("What level is your character? (number) "))
         if self.user_level == 19:
             number = 20
         else:
             number = self.user_level
 
-        counter = 0
-        while counter != len(range(4, number+1, 4))+4:
-            counter += 1
+        self.counter = 0
+        while self.counter < len(range(4, number+1, 4))+4:
+            self.counter += 1
             self.stat_increase()
+            print(self.counter)
     
         return self.user_level
 
