@@ -13,54 +13,6 @@ from DnD_function_library import Dnd
 
 dnd = Dnd()
 
-def save_to_json_file(character_data, username):
-    folder_path = f"C:\\Users\\{username}\\Documents\\GitHub\\DnD_Character-Sheet-Builder"
-    os.makedirs(folder_path, exist_ok=True)
-    file_path = os.path.join(folder_path, "DnD_Database.json")
-
-    # Load existing JSON
-    if os.path.exists(file_path):
-        with open(file_path, "r", encoding="utf-8") as file:
-            try:
-                data = json.load(file)
-            except json.JSONDecodeError:
-                data = {
-                    "Characters": [],
-                    "Character_Skills": [],
-                    "Character_Inventory": [],
-                    "Character_Spells": []
-                }
-    else:
-        data = {
-            "Characters": [],
-            "Character_Skills": [],
-            "Character_Inventory": [],
-            "Character_Spells": []
-        }
-
-    # Remove existing character (by matching the key)
-    char_key = dnd.char_name
-    data["Characters"] = [c for c in data["Characters"] if char_key not in c]
-    data["Character_Skills"] = [s for s in data["Character_Skills"] if f"{char_key}_skills" not in s]
-    data["Character_Inventory"] = [i for i in data["Character_Inventory"] if f"{char_key}_inventory" not in i]
-    data["Character_Spells"] = [s for s in data["Character_Spells"] if f"{char_key}_spells" not in s]
-
-    
-    character_info = character_data["Characters"][0][dnd.char_name]
-    skills_block = character_data["Character_Skills"][0]
-    inventory_block = character_data["Character_Inventory"][0]
-    spells_block = character_data["Character_Spells"][0]
-
-    # Add the new character
-    data["Characters"].append({dnd.char_name: character_info})
-    data["Character_Skills"].append(skills_block)
-    data["Character_Inventory"].append(inventory_block)
-    data["Character_Spells"].append(spells_block)
-
-    # Save updated data
-    with open(file_path, "w", encoding="utf-8") as file:
-        json.dump(data, file, indent=4)
-
 while True:
     dnd.rolls = []  
     start = input("Start? (y/n) ").lower().strip()  
@@ -390,7 +342,7 @@ Movement Speed: {dnd.movement_speed}\n""")
     
     char_data["Character_Skills"].append({f"{dnd.char_name}_skills": skills})
     
-    save_to_json_file(char_data, username)
+    dnd.save_to_json_file(char_data, username, dnd.char_name)
 
 
 '''
