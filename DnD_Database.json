@@ -41,6 +41,36 @@
                 "alignment": "Chaotic Neutral",
                 "initiative_bonus": 5
             }
+        },
+        {
+            "Kai": {
+                "race": "Water Genasi",
+                "class": [
+                    ""
+                ],
+                "level": 10,
+                "background": null,
+                "str": 21,
+                "dex": 21,
+                "con": 21,
+                "int": 21,
+                "wis": 21,
+                "cha": 21,
+                "str_mod": 5,
+                "dex_mod": 5,
+                "con_mod": 5,
+                "int_mod": 5,
+                "wis_mod": 5,
+                "cha_mod": 5,
+                "proficiency_bonus": 4,
+                "hp_max": 107,
+                "languages": [
+                    "Common",
+                    "Celestial"
+                ],
+                "alignment": "True Neutral",
+                "initiative_bonus": 5
+            }
         }
     ],
     "Classes": [
@@ -369,6 +399,82 @@
                     "score": 4
                 }
             }
+        },
+        {
+            "Kai_skills": {
+                "Acrobatics": {
+                    "proficiency": false,
+                    "score": 5
+                },
+                "Animal Handling": {
+                    "proficiency": false,
+                    "score": 5
+                },
+                "Arcana": {
+                    "proficiency": false,
+                    "score": 5
+                },
+                "Athletics": {
+                    "proficiency": false,
+                    "score": 5
+                },
+                "Deception": {
+                    "proficiency": false,
+                    "score": 5
+                },
+                "History": {
+                    "proficiency": false,
+                    "score": 5
+                },
+                "Insight": {
+                    "proficiency": false,
+                    "score": 5
+                },
+                "Intimidation": {
+                    "proficiency": false,
+                    "score": 5
+                },
+                "Investigation": {
+                    "proficiency": false,
+                    "score": 5
+                },
+                "Medicine": {
+                    "proficiency": false,
+                    "score": 5
+                },
+                "Nature": {
+                    "proficiency": false,
+                    "score": 5
+                },
+                "Perception": {
+                    "proficiency": false,
+                    "score": 5
+                },
+                "Performance": {
+                    "proficiency": false,
+                    "score": 5
+                },
+                "Persuasion": {
+                    "proficiency": false,
+                    "score": 5
+                },
+                "Religion": {
+                    "proficiency": false,
+                    "score": 5
+                },
+                "Sleight of Hand": {
+                    "proficiency": false,
+                    "score": 5
+                },
+                "Stealth": {
+                    "proficiency": false,
+                    "score": 5
+                },
+                "Survival": {
+                    "proficiency": false,
+                    "score": 5
+                }
+            }
         }
     ],
     "Equipment": [
@@ -382,6 +488,13 @@
     "Character_Inventory": [
         {
             "Example_inventory": {
+                "example_equipment": {
+                    "quantity": 1
+                }
+            }
+        },
+        {
+            "Kai_inventory": {
                 "example_equipment": {
                     "quantity": 1
                 }
@@ -403,6 +516,12 @@
     "Character_Spells": [
         {
             "Example_spells": [
+                "example_spell_1",
+                "example_spell_2"
+            ]
+        },
+        {
+            "Kai_spells": [
                 "example_spell_1",
                 "example_spell_2"
             ]

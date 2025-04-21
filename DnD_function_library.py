@@ -450,7 +450,7 @@ class Dnd:
 
         return self.hp_max
 
-    def save_to_json_file(character_data, user_name, char_name):
+    def save_to_json_file(self, character_data, user_name, char_name):
         folder_path = f"C:\\Users\\{user_name}\\Documents\\GitHub\\DnD_Character-Sheet-Builder"
         os.makedirs(folder_path, exist_ok=True)
         file_path = os.path.join(folder_path, "DnD_Database.json")
