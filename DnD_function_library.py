@@ -270,7 +270,7 @@ class Dnd:
             number = self.user_level
 
         self.counter = 0
-        while self.counter < len(range(4, number+1, 4))+4:
+        while self.counter < len(range(4, number+1, 4)):
             self.counter += 1
             self.stat_increase()
             print(self.counter)
@@ -450,8 +450,8 @@ class Dnd:
 
         return self.hp_max
 
-    def save_to_json_file(character_data, username, char_name):
-        folder_path = f"C:\\Users\\{username}\\Documents\\GitHub\\DnD_Character-Sheet-Builder"
+    def save_to_json_file(character_data, user_name, char_name):
+        folder_path = f"C:\\Users\\{user_name}\\Documents\\GitHub\\DnD_Character-Sheet-Builder"
         os.makedirs(folder_path, exist_ok=True)
         file_path = os.path.join(folder_path, "DnD_Database.json")
 

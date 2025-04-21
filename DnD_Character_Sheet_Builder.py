@@ -342,8 +342,10 @@ Movement Speed: {dnd.movement_speed}\n""")
     
     char_data["Character_Skills"].append({f"{dnd.char_name}_skills": skills})
     
-    dnd.save_to_json_file(char_data, username, dnd.char_name)
-
+    character_name = dnd.char_name
+    
+    dnd.save_to_json_file(char_data, username, character_name)
+    
 
 '''
 Features to be added!
