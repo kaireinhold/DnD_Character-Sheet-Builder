@@ -345,29 +345,3 @@ Movement Speed: {dnd.movement_speed}\n""")
     character_name = dnd.char_name
     
     dnd.save_to_json_file(char_data, username, character_name)
-    
-
-'''
-Features to be added!
-
-TBA races:
-    Homebrew:
-        -Core Starling
-        -Starling
-        -Shadeling
-        -Crystalling
-        -Bloodling
-        -Pure Starling
-        -Symbioling
-        Silenced
-        Starved
-
-
-TBA features (numbers = priority/difficulty estimate):
-    Spells (5)
-    Skills (4)
-    AC (3)
-    Level up characters without making whole new character sheet instance (6)
-    Background (1)
-    Equipment (2)
-'''
