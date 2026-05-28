@@ -6,6 +6,7 @@ import os
 import json
 
 class Dnd:
+    """A class that includes all functions relating to Dungeons and Dragons, and the Character Sheet Builder this library is used in."""
     def __init__(self):
         self.rolls = []
         self.roll_output = 0
@@ -26,10 +27,11 @@ class Dnd:
 
     def roll(self, di=None):
         """
-        Simulate rolling dice with a specified number of sides and display the result.
+        Simulates rolling any amount of dice with a user or back-end specified number of sides and displays the result, as well as the process of rolling each dice, and returns the results for backend use.
     
         Input:
         - d<number> (str): A string where <number> represents the number of sides on the dice to roll, chosen by the user (e.g., 'd20' for a 20-sided die).
+        - <number1>d<number2> (str): A string where <number1> represents the amount of dice  
     
         Output:
         - str: A message indicating "Rolling d<number>..." followed by a wait of 1.5 seconds, and then another message displaying the rolled value (e.g., "d<number>: You rolled a <rolled value>!").
@@ -87,7 +89,7 @@ class Dnd:
 
     def roll_no_output(self, di=None):
         """
-        Simulate rolling dice with a specified number of sides and display the result.
+        Simulates rolling any amount of dice with a user or back-end specified number of sides and returns the results for backend use.
     
         Input:
         - d<number> (str): A string where <number> represents the number of sides on the dice to roll, chosen by the user (e.g., 'd20' for a 20-sided die).
@@ -96,7 +98,7 @@ class Dnd:
         - None.
     
         Behavior:
-        - Prompts the user to input a dice to roll (ie. 'd20' for a 20-sided dice.)
+        - Prompts the user to input a dice to roll (ie. 'd20' for a 20-sided dice, or "3d6" for 3 6-sided dice.)
         - Rolls the specified dice and prints the result.
         - Appends the roll output for each roll to the list named 'rolls'
 
@@ -517,4 +519,7 @@ class Dnd:
         pass
 
     def level_up(self,):
+        pass
+
+    def feats(self, char_class=None, char_race=None, char_background=None):
         pass
